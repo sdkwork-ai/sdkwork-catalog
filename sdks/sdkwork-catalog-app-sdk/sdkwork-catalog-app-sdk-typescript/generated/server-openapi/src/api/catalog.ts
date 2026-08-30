@@ -1,5 +1,5 @@
 import { appApiPath } from './paths';
-import type { HttpClient } from '../http/client';
+import type { ApiRequestOptions, HttpClient } from '../http/client';
 
 import type { CatalogAttributePageData, CatalogCategory, CatalogCategoryPageData, CatalogProduct, CatalogProductPageData, CatalogSku, CatalogSkuPageData } from '../types';
 
@@ -13,8 +13,8 @@ export class CatalogSkusApi {
 
 
 /** Retrieve an active catalog SKU. */
-  async retrieve(skuId: string): Promise<CatalogSku> {
-    return this.client.get<CatalogSku>(appApiPath(`/catalog/skus/${serializePathParameter(skuId, { name: 'skuId', style: 'simple', explode: false })}`));
+  async retrieve(skuId: string, requestOptions?: ApiRequestOptions): Promise<CatalogSku> {
+    return this.client.request<CatalogSku>(appApiPath(`/catalog/skus/${serializePathParameter(skuId, { name: 'skuId', style: 'simple', explode: false })}`), { ...(requestOptions?.signal !== undefined ? { signal: requestOptions.signal } : {}), ...(requestOptions?.timeout !== undefined ? { timeout: requestOptions.timeout } : {}), method: 'GET' as any, sdkworkUnwrapKind: 'item' });
   }
 }
 
@@ -32,18 +32,20 @@ export class CatalogProductsSkusApi {
 
 
 /** List active SKUs for a catalog product. */
-  async list(productId: string, params?: CatalogProductsSkusListParams): Promise<CatalogSkuPageData> {
+  async list(productId: string, params?: CatalogProductsSkusListParams, requestOptions?: ApiRequestOptions): Promise<CatalogSkuPageData> {
     const query = buildQueryString([
       { name: 'page', value: params?.page, style: 'form', explode: true, allowReserved: false },
       { name: 'page_size', value: params?.pageSize, style: 'form', explode: true, allowReserved: false },
     ]);
-    return this.client.get<CatalogSkuPageData>(appendQueryString(appApiPath(`/catalog/products/${serializePathParameter(productId, { name: 'productId', style: 'simple', explode: false })}/skus`), query));
+    return this.client.request<CatalogSkuPageData>(appendQueryString(appApiPath(`/catalog/products/${serializePathParameter(productId, { name: 'productId', style: 'simple', explode: false })}/skus`), query), { ...(requestOptions?.signal !== undefined ? { signal: requestOptions.signal } : {}), ...(requestOptions?.timeout !== undefined ? { timeout: requestOptions.timeout } : {}), method: 'GET' as any, sdkworkUnwrapKind: 'page' });
   }
 }
 
 export interface CatalogProductsListParams {
+  shopId?: string;
   categoryId?: string;
   productType?: string;
+  sort?: string;
   page?: number;
   pageSize?: number;
 }
@@ -59,19 +61,21 @@ export class CatalogProductsApi {
 
 
 /** List active catalog products. */
-  async list(params?: CatalogProductsListParams): Promise<CatalogProductPageData> {
+  async list(params?: CatalogProductsListParams, requestOptions?: ApiRequestOptions): Promise<CatalogProductPageData> {
     const query = buildQueryString([
+      { name: 'shop_id', value: params?.shopId, style: 'form', explode: true, allowReserved: false },
       { name: 'category_id', value: params?.categoryId, style: 'form', explode: true, allowReserved: false },
       { name: 'product_type', value: params?.productType, style: 'form', explode: true, allowReserved: false },
+      { name: 'sort', value: params?.sort, style: 'form', explode: true, allowReserved: false },
       { name: 'page', value: params?.page, style: 'form', explode: true, allowReserved: false },
       { name: 'page_size', value: params?.pageSize, style: 'form', explode: true, allowReserved: false },
     ]);
-    return this.client.get<CatalogProductPageData>(appendQueryString(appApiPath(`/catalog/products`), query));
+    return this.client.request<CatalogProductPageData>(appendQueryString(appApiPath(`/catalog/products`), query), { ...(requestOptions?.signal !== undefined ? { signal: requestOptions.signal } : {}), ...(requestOptions?.timeout !== undefined ? { timeout: requestOptions.timeout } : {}), method: 'GET' as any, sdkworkUnwrapKind: 'page' });
   }
 
 /** Retrieve an active catalog product. */
-  async retrieve(productId: string): Promise<CatalogProduct> {
-    return this.client.get<CatalogProduct>(appApiPath(`/catalog/products/${serializePathParameter(productId, { name: 'productId', style: 'simple', explode: false })}`));
+  async retrieve(productId: string, requestOptions?: ApiRequestOptions): Promise<CatalogProduct> {
+    return this.client.request<CatalogProduct>(appApiPath(`/catalog/products/${serializePathParameter(productId, { name: 'productId', style: 'simple', explode: false })}`), { ...(requestOptions?.signal !== undefined ? { signal: requestOptions.signal } : {}), ...(requestOptions?.timeout !== undefined ? { timeout: requestOptions.timeout } : {}), method: 'GET' as any, sdkworkUnwrapKind: 'item' });
   }
 }
 
@@ -90,18 +94,18 @@ export class CatalogCategoriesApi {
 
 
 /** List active catalog categories. */
-  async list(params?: CatalogCategoriesListParams): Promise<CatalogCategoryPageData> {
+  async list(params?: CatalogCategoriesListParams, requestOptions?: ApiRequestOptions): Promise<CatalogCategoryPageData> {
     const query = buildQueryString([
       { name: 'parent_id', value: params?.parentId, style: 'form', explode: true, allowReserved: false },
       { name: 'page', value: params?.page, style: 'form', explode: true, allowReserved: false },
       { name: 'page_size', value: params?.pageSize, style: 'form', explode: true, allowReserved: false },
     ]);
-    return this.client.get<CatalogCategoryPageData>(appendQueryString(appApiPath(`/catalog/categories`), query));
+    return this.client.request<CatalogCategoryPageData>(appendQueryString(appApiPath(`/catalog/categories`), query), { ...(requestOptions?.signal !== undefined ? { signal: requestOptions.signal } : {}), ...(requestOptions?.timeout !== undefined ? { timeout: requestOptions.timeout } : {}), method: 'GET' as any, sdkworkUnwrapKind: 'page' });
   }
 
 /** Retrieve an active catalog category. */
-  async retrieve(categoryId: string): Promise<CatalogCategory> {
-    return this.client.get<CatalogCategory>(appApiPath(`/catalog/categories/${serializePathParameter(categoryId, { name: 'categoryId', style: 'simple', explode: false })}`));
+  async retrieve(categoryId: string, requestOptions?: ApiRequestOptions): Promise<CatalogCategory> {
+    return this.client.request<CatalogCategory>(appApiPath(`/catalog/categories/${serializePathParameter(categoryId, { name: 'categoryId', style: 'simple', explode: false })}`), { ...(requestOptions?.signal !== undefined ? { signal: requestOptions.signal } : {}), ...(requestOptions?.timeout !== undefined ? { timeout: requestOptions.timeout } : {}), method: 'GET' as any, sdkworkUnwrapKind: 'item' });
   }
 }
 
@@ -119,24 +123,22 @@ export class CatalogAttributesApi {
 
 
 /** List active catalog attributes. */
-  async list(params?: CatalogAttributesListParams): Promise<CatalogAttributePageData> {
+  async list(params?: CatalogAttributesListParams, requestOptions?: ApiRequestOptions): Promise<CatalogAttributePageData> {
     const query = buildQueryString([
       { name: 'page', value: params?.page, style: 'form', explode: true, allowReserved: false },
       { name: 'page_size', value: params?.pageSize, style: 'form', explode: true, allowReserved: false },
     ]);
-    return this.client.get<CatalogAttributePageData>(appendQueryString(appApiPath(`/catalog/attributes`), query));
+    return this.client.request<CatalogAttributePageData>(appendQueryString(appApiPath(`/catalog/attributes`), query), { ...(requestOptions?.signal !== undefined ? { signal: requestOptions.signal } : {}), ...(requestOptions?.timeout !== undefined ? { timeout: requestOptions.timeout } : {}), method: 'GET' as any, sdkworkUnwrapKind: 'page' });
   }
 }
 
 export class CatalogApi {
-
   public readonly attributes: CatalogAttributesApi;
   public readonly categories: CatalogCategoriesApi;
   public readonly products: CatalogProductsApi;
   public readonly skus: CatalogSkusApi;
 
   constructor(client: HttpClient) {
-
     this.attributes = new CatalogAttributesApi(client);
     this.categories = new CatalogCategoriesApi(client);
     this.products = new CatalogProductsApi(client);

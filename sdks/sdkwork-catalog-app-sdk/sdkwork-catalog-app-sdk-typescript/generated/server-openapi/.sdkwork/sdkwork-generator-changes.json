@@ -9,34 +9,33 @@
     "protocol": "http",
     "packageName": "@sdkwork/catalog-app-sdk"
   },
-  "changeFingerprint": "5b7ce52572147eb374587daefaf429e4287d2f2b1251707fab6e9666390844a4",
+  "changeFingerprint": "2aed461f3e2f73e1a9502f34fc48044a2cad4fda2e6c55cab0c149139d704450",
   "changes": {
-    "createdGeneratedFiles": [
-      "src/api/delivery.ts"
-    ],
+    "createdGeneratedFiles": [],
     "updatedGeneratedFiles": [
+      "bin/publish-core.mjs",
+      "package.json",
       "README.md",
-      "src/api/index.ts",
-      "src/sdk.ts"
+      "src/api/base.ts",
+      "src/api/cart.ts",
+      "src/api/catalog.ts",
+      "src/api/delivery.ts",
+      "src/http/client.ts"
     ],
     "unchangedGeneratedFiles": [
-      "bin/publish-core.mjs",
       "bin/publish.ps1",
       "bin/publish.sh",
       "bin/sdk-gen.bat",
       "bin/sdk-gen.sh",
       "CHANGELOG.md",
       "LICENSE",
-      "package.json",
       "sdkwork-sdk.json",
-      "src/api/base.ts",
-      "src/api/cart.ts",
-      "src/api/catalog.ts",
+      "src/api/index.ts",
       "src/api/paths.ts",
       "src/auth/index.ts",
-      "src/http/client.ts",
       "src/http/index.ts",
       "src/index.ts",
+      "src/sdk.ts",
       "src/types/add-cart-item-request.ts",
       "src/types/address-data.ts",
       "src/types/address-list-response.ts",
@@ -76,30 +75,52 @@
       "src/types/update-cart-item-request.ts",
       "tsconfig.json"
     ],
-    "deletedGeneratedFiles": [
-      "src/api/addresses.ts"
-    ],
+    "deletedGeneratedFiles": [],
     "scaffoldedFiles": [],
     "preservedScaffoldFiles": [
       "custom/build-runtime.mjs",
       "custom/README.md"
     ],
-    "backedUpFiles": []
+    "backedUpFiles": [
+      "package.json"
+    ]
   },
   "impact": {
     "schemaVersion": 1,
     "areas": [
       "api-surface",
+      "runtime",
+      "build-metadata",
+      "publish-workflow",
       "documentation"
     ],
     "details": [
       {
         "area": "api-surface",
         "paths": [
-          "src/api/addresses.ts",
+          "src/api/base.ts",
+          "src/api/cart.ts",
+          "src/api/catalog.ts",
           "src/api/delivery.ts",
-          "src/api/index.ts",
-          "src/sdk.ts"
+          "src/http/client.ts"
+        ]
+      },
+      {
+        "area": "runtime",
+        "paths": [
+          "src/http/client.ts"
+        ]
+      },
+      {
+        "area": "build-metadata",
+        "paths": [
+          "package.json"
+        ]
+      },
+      {
+        "area": "publish-workflow",
+        "paths": [
+          "bin/publish-core.mjs"
         ]
       },
       {
@@ -110,18 +131,18 @@
       }
     ],
     "requiresVerification": true,
-    "summary": "Detected impact areas: api-surface, documentation. Verification is required."
+    "summary": "Detected impact areas: api-surface, runtime, build-metadata, publish-workflow, documentation. Verification is required."
   },
   "verificationPlan": {
     "shouldRun": true,
     "runPhase": "now",
-    "summary": "Detected impact areas: api-surface, documentation. Verification is required. Run the required verification commands now against the generated SDK output.",
+    "summary": "Detected impact areas: api-surface, runtime, build-metadata, publish-workflow, documentation. Verification is required. Run the required verification commands now against the generated SDK output.",
     "steps": [
       {
         "id": "check",
         "title": "Unified package check",
         "required": true,
-        "rationale": "Validate the generated package with the unified publish helper. Triggered by: api-surface, documentation.",
+        "rationale": "Validate the generated package with the unified publish helper. Triggered by: api-surface, runtime, build-metadata, publish-workflow, documentation.",
         "workingDirectory": "E:\\sdkwork-space\\sdkwork-catalog\\sdks\\sdkwork-catalog-app-sdk\\sdkwork-catalog-app-sdk-typescript\\generated\\server-openapi",
         "command": "node",
         "args": [
@@ -139,7 +160,7 @@
         "id": "build",
         "title": "Unified package build",
         "required": true,
-        "rationale": "Run the full package build because this language uses a lighter check path than the final build. Triggered by: api-surface, documentation.",
+        "rationale": "Run the full package build because this language uses a lighter check path than the final build. Triggered by: api-surface, runtime, build-metadata, publish-workflow, documentation.",
         "workingDirectory": "E:\\sdkwork-space\\sdkwork-catalog\\sdks\\sdkwork-catalog-app-sdk\\sdkwork-catalog-app-sdk-typescript\\generated\\server-openapi",
         "command": "node",
         "args": [
@@ -163,7 +184,7 @@
     "applyRequiresExpectedFingerprint": false,
     "summary": "Changes have been applied. Run the required verification plan now.",
     "reasons": [
-      "deleted-generated-files",
+      "backed-up-generated-files",
       "manual-review-required",
       "verification-required"
     ]

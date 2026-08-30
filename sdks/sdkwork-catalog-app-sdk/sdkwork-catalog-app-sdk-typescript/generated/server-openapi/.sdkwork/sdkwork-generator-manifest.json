@@ -12,7 +12,7 @@
   "generatedFiles": [
     {
       "path": "bin/publish-core.mjs",
-      "sha256": "98ad0918a78bfbe22bf8f12fec709b0bed545b9e01edd40f5e4abf31a23378a5"
+      "sha256": "a47e95119bf3eafcbcb2102f7024c147f967924e4e3f343d1a29effb4b6765df"
     },
     {
       "path": "bin/publish.ps1",
@@ -40,11 +40,11 @@
     },
     {
       "path": "package.json",
-      "sha256": "fc3e4f676c0e911f4e90c851e11b9c6bce89926628af2873edb252bd9ffe6e8e"
+      "sha256": "354b7f256078a79fc10b40686644abf2d742895f655e737910aa5bab69bea6c6"
     },
     {
       "path": "README.md",
-      "sha256": "7368b384294097adbce1a184266efc66cdbb7e51cbe01cad6f3e5df1ecf5fab2"
+      "sha256": "d8368355940c8a448360caf0c1637a0bbd24f967942de50243dffa4f4b48c10c"
     },
     {
       "path": "sdkwork-sdk.json",
@@ -52,19 +52,19 @@
     },
     {
       "path": "src/api/base.ts",
-      "sha256": "02ad25e6bf331ff241ba387c2947ddf1900dd849038e08c2757416a3aa788a04"
+      "sha256": "94d136c54a008dfe7602e373a0b2c79176bbf2fc6e7c899fc23b1f12f750380f"
     },
     {
       "path": "src/api/cart.ts",
-      "sha256": "963b68a4f3690e6bac99490585b2dd7e83f7350b07f43c43979a57fc414a968c"
+      "sha256": "9f23340cb80a4dcfa746ff7c9e3c257d5136d44f70c2eb8c78dc5245da673243"
     },
     {
       "path": "src/api/catalog.ts",
-      "sha256": "c1b9b09f96d5d956b3b9d8aa433f7345d677f11aca8dacd19c4c85567c62bfa7"
+      "sha256": "4a0a6f2dd1a5875c4d99431f712b7db10098fb7c7f50d6f4cf63edf1cd6b9daf"
     },
     {
       "path": "src/api/delivery.ts",
-      "sha256": "8f3327ee77dee1f1c8927fe0d3eecf14659280c05fd29beafa3e4453e20fc14c"
+      "sha256": "927b1e7af8784abe24808615b51750cecfd1260d5acd34e956b1298df7e55a2c"
     },
     {
       "path": "src/api/index.ts",
@@ -80,7 +80,7 @@
     },
     {
       "path": "src/http/client.ts",
-      "sha256": "902ecbf9b15072c147ac9716f22209cd50b770e517b55d1ce1583671ab4d2c3e"
+      "sha256": "868b7785497a93658b628de2d9b520d9d2456406bcf2ef717319beaa6913146d"
     },
     {
       "path": "src/http/index.ts",
@@ -244,7 +244,7 @@
     },
     {
       "path": "tsconfig.json",
-      "sha256": "7c8a6c2b00fb208ec28e1e6045194487d1b3e563d6c44cef4783fd4fe0e8ffad"
+      "sha256": "35f6f0baf03ca4245339f0a532b02c6b0c8e64d66852a2f77d38ae063b2024b8"
     }
   ],
   "scaffoldFiles": [

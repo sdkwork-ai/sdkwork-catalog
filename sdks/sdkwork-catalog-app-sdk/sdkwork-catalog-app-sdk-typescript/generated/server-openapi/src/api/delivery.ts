@@ -1,5 +1,5 @@
 import { appApiPath } from './paths';
-import type { HttpClient } from '../http/client';
+import type { ApiRequestOptions, HttpClient } from '../http/client';
 
 import type { Address, AddressPageData, CreateAddressRequest, UpdateAddressRequest } from '../types';
 
@@ -13,8 +13,8 @@ export class DeliveryAddressesDefaultSelectionApi {
 
 
 /** Set the default delivery address. */
-  async update(addressId: string): Promise<Address> {
-    return this.client.put<Address>(appApiPath(`/addresses/${serializePathParameter(addressId, { name: 'addressId', style: 'simple', explode: false })}/default_selection`));
+  async update(addressId: string, requestOptions?: ApiRequestOptions): Promise<Address> {
+    return this.client.request<Address>(appApiPath(`/addresses/${serializePathParameter(addressId, { name: 'addressId', style: 'simple', explode: false })}/default_selection`), { ...(requestOptions?.signal !== undefined ? { signal: requestOptions.signal } : {}), ...(requestOptions?.timeout !== undefined ? { timeout: requestOptions.timeout } : {}), method: 'PUT' as any, sdkworkUnwrapKind: 'item' });
   }
 }
 
@@ -34,36 +34,34 @@ export class DeliveryAddressesApi {
 
 
 /** List the authenticated user's delivery addresses. */
-  async list(params?: DeliveryAddressesListParams): Promise<AddressPageData> {
+  async list(params?: DeliveryAddressesListParams, requestOptions?: ApiRequestOptions): Promise<AddressPageData> {
     const query = buildQueryString([
       { name: 'page', value: params?.page, style: 'form', explode: true, allowReserved: false },
       { name: 'page_size', value: params?.pageSize, style: 'form', explode: true, allowReserved: false },
     ]);
-    return this.client.get<AddressPageData>(appendQueryString(appApiPath(`/addresses`), query));
+    return this.client.request<AddressPageData>(appendQueryString(appApiPath(`/addresses`), query), { ...(requestOptions?.signal !== undefined ? { signal: requestOptions.signal } : {}), ...(requestOptions?.timeout !== undefined ? { timeout: requestOptions.timeout } : {}), method: 'GET' as any, sdkworkUnwrapKind: 'page' });
   }
 
 /** Create a delivery address. */
-  async create(body: CreateAddressRequest): Promise<Address> {
-    return this.client.post<Address>(appApiPath(`/addresses`), body, undefined, undefined, 'application/json');
+  async create(body: CreateAddressRequest, requestOptions?: ApiRequestOptions): Promise<Address> {
+    return this.client.request<Address>(appApiPath(`/addresses`), { ...(requestOptions?.signal !== undefined ? { signal: requestOptions.signal } : {}), ...(requestOptions?.timeout !== undefined ? { timeout: requestOptions.timeout } : {}), method: 'POST' as any, body, contentType: 'application/json', sdkworkUnwrapKind: 'item' });
   }
 
 /** Update a delivery address. */
-  async update(addressId: string, body: UpdateAddressRequest): Promise<Address> {
-    return this.client.patch<Address>(appApiPath(`/addresses/${serializePathParameter(addressId, { name: 'addressId', style: 'simple', explode: false })}`), body, undefined, undefined, 'application/json');
+  async update(addressId: string, body: UpdateAddressRequest, requestOptions?: ApiRequestOptions): Promise<Address> {
+    return this.client.request<Address>(appApiPath(`/addresses/${serializePathParameter(addressId, { name: 'addressId', style: 'simple', explode: false })}`), { ...(requestOptions?.signal !== undefined ? { signal: requestOptions.signal } : {}), ...(requestOptions?.timeout !== undefined ? { timeout: requestOptions.timeout } : {}), method: 'PATCH' as any, body, contentType: 'application/json', sdkworkUnwrapKind: 'item' });
   }
 
 /** Delete a delivery address. */
-  async delete(addressId: string): Promise<void> {
-    return this.client.delete<void>(appApiPath(`/addresses/${serializePathParameter(addressId, { name: 'addressId', style: 'simple', explode: false })}`));
+  async delete(addressId: string, requestOptions?: ApiRequestOptions): Promise<void> {
+    return this.client.request<void>(appApiPath(`/addresses/${serializePathParameter(addressId, { name: 'addressId', style: 'simple', explode: false })}`), { ...(requestOptions?.signal !== undefined ? { signal: requestOptions.signal } : {}), ...(requestOptions?.timeout !== undefined ? { timeout: requestOptions.timeout } : {}), method: 'DELETE' as any });
   }
 }
 
 export class DeliveryApi {
-
   public readonly addresses: DeliveryAddressesApi;
 
   constructor(client: HttpClient) {
-
     this.addresses = new DeliveryAddressesApi(client);
   }
 

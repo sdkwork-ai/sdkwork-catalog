@@ -1,5 +1,5 @@
 import { appApiPath } from './paths';
-import type { HttpClient } from '../http/client';
+import type { ApiRequestOptions, HttpClient } from '../http/client';
 
 import type { AddCartItemRequest, CartItem, CartItemPageData, UpdateCartItemRequest } from '../types';
 
@@ -18,36 +18,34 @@ export class CartItemsApi {
 
 
 /** List the authenticated user's cart items. */
-  async list(params?: CartItemsListParams): Promise<CartItemPageData> {
+  async list(params?: CartItemsListParams, requestOptions?: ApiRequestOptions): Promise<CartItemPageData> {
     const query = buildQueryString([
       { name: 'page', value: params?.page, style: 'form', explode: true, allowReserved: false },
       { name: 'page_size', value: params?.pageSize, style: 'form', explode: true, allowReserved: false },
     ]);
-    return this.client.get<CartItemPageData>(appendQueryString(appApiPath(`/cart/items`), query));
+    return this.client.request<CartItemPageData>(appendQueryString(appApiPath(`/cart/items`), query), { ...(requestOptions?.signal !== undefined ? { signal: requestOptions.signal } : {}), ...(requestOptions?.timeout !== undefined ? { timeout: requestOptions.timeout } : {}), method: 'GET' as any, sdkworkUnwrapKind: 'page' });
   }
 
 /** Add an item to the authenticated user's cart. */
-  async create(body: AddCartItemRequest): Promise<CartItem> {
-    return this.client.post<CartItem>(appApiPath(`/cart/items`), body, undefined, undefined, 'application/json');
+  async create(body: AddCartItemRequest, requestOptions?: ApiRequestOptions): Promise<CartItem> {
+    return this.client.request<CartItem>(appApiPath(`/cart/items`), { ...(requestOptions?.signal !== undefined ? { signal: requestOptions.signal } : {}), ...(requestOptions?.timeout !== undefined ? { timeout: requestOptions.timeout } : {}), method: 'POST' as any, body, contentType: 'application/json', sdkworkUnwrapKind: 'item' });
   }
 
 /** Update a cart item quantity. */
-  async update(cartItemId: string, body: UpdateCartItemRequest): Promise<CartItem> {
-    return this.client.patch<CartItem>(appApiPath(`/cart/items/${serializePathParameter(cartItemId, { name: 'cartItemId', style: 'simple', explode: false })}`), body, undefined, undefined, 'application/json');
+  async update(cartItemId: string, body: UpdateCartItemRequest, requestOptions?: ApiRequestOptions): Promise<CartItem> {
+    return this.client.request<CartItem>(appApiPath(`/cart/items/${serializePathParameter(cartItemId, { name: 'cartItemId', style: 'simple', explode: false })}`), { ...(requestOptions?.signal !== undefined ? { signal: requestOptions.signal } : {}), ...(requestOptions?.timeout !== undefined ? { timeout: requestOptions.timeout } : {}), method: 'PATCH' as any, body, contentType: 'application/json', sdkworkUnwrapKind: 'item' });
   }
 
 /** Delete a cart item. */
-  async delete(cartItemId: string): Promise<void> {
-    return this.client.delete<void>(appApiPath(`/cart/items/${serializePathParameter(cartItemId, { name: 'cartItemId', style: 'simple', explode: false })}`));
+  async delete(cartItemId: string, requestOptions?: ApiRequestOptions): Promise<void> {
+    return this.client.request<void>(appApiPath(`/cart/items/${serializePathParameter(cartItemId, { name: 'cartItemId', style: 'simple', explode: false })}`), { ...(requestOptions?.signal !== undefined ? { signal: requestOptions.signal } : {}), ...(requestOptions?.timeout !== undefined ? { timeout: requestOptions.timeout } : {}), method: 'DELETE' as any });
   }
 }
 
 export class CartApi {
-
   public readonly items: CartItemsApi;
 
   constructor(client: HttpClient) {
-
     this.items = new CartItemsApi(client);
   }
 

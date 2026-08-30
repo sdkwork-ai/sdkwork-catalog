@@ -161,10 +161,11 @@ async fn app_list_products(
     };
     let query = match ProductSpuListQuery::new(
         &subject.tenant_id,
-        subject.organization_id.as_deref(),
+        params.shop_id.as_deref().or(subject.organization_id.as_deref()),
         params.category_id.as_deref(),
         params.product_type.as_deref(),
         Some("active"),
+        params.sort.as_deref(),
         params.page,
         params.page_size,
     ) {
@@ -203,8 +204,10 @@ struct AppCategoryListQueryParams {
 
 #[derive(Debug, Deserialize)]
 struct AppProductListQueryParams {
+    shop_id: Option<String>,
     category_id: Option<String>,
     product_type: Option<String>,
+    sort: Option<String>,
     page: Option<i64>,
     page_size: Option<i64>,
 }

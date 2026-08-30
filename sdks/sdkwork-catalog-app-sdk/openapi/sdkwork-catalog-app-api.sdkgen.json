@@ -91,7 +91,13 @@
         "x-sdkwork-resource": "catalog.attributes",
         "x-sdkwork-request-context": "WebRequestContext",
         "x-sdkwork-api-surface": "app-api",
-        "x-sdkwork-pagination-mode": "offset"
+        "x-sdkwork-pagination-mode": "offset",
+        "security": [
+          {
+            "AuthToken": [],
+            "AccessToken": []
+          }
+        ]
       }
     },
     "/app/v3/api/catalog/categories": {
@@ -165,7 +171,13 @@
         "x-sdkwork-resource": "catalog.categories",
         "x-sdkwork-request-context": "WebRequestContext",
         "x-sdkwork-api-surface": "app-api",
-        "x-sdkwork-pagination-mode": "offset"
+        "x-sdkwork-pagination-mode": "offset",
+        "security": [
+          {
+            "AuthToken": [],
+            "AccessToken": []
+          }
+        ]
       }
     },
     "/app/v3/api/catalog/categories/{categoryId}": {
@@ -237,7 +249,13 @@
         "x-sdkwork-domain": "commerce",
         "x-sdkwork-resource": "catalog.categories",
         "x-sdkwork-request-context": "WebRequestContext",
-        "x-sdkwork-api-surface": "app-api"
+        "x-sdkwork-api-surface": "app-api",
+        "security": [
+          {
+            "AuthToken": [],
+            "AccessToken": []
+          }
+        ]
       }
     },
     "/app/v3/api/catalog/products": {
@@ -249,6 +267,14 @@
         "operationId": "products.list",
         "parameters": [
           {
+            "name": "shop_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "category_id",
             "in": "query",
             "required": false,
@@ -258,6 +284,14 @@
           },
           {
             "name": "product_type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
             "in": "query",
             "required": false,
             "schema": {
@@ -319,7 +353,13 @@
         "x-sdkwork-resource": "catalog.products",
         "x-sdkwork-request-context": "WebRequestContext",
         "x-sdkwork-api-surface": "app-api",
-        "x-sdkwork-pagination-mode": "offset"
+        "x-sdkwork-pagination-mode": "offset",
+        "security": [
+          {
+            "AuthToken": [],
+            "AccessToken": []
+          }
+        ]
       }
     },
     "/app/v3/api/catalog/products/{productId}": {
@@ -391,7 +431,13 @@
         "x-sdkwork-domain": "commerce",
         "x-sdkwork-resource": "catalog.products",
         "x-sdkwork-request-context": "WebRequestContext",
-        "x-sdkwork-api-surface": "app-api"
+        "x-sdkwork-api-surface": "app-api",
+        "security": [
+          {
+            "AuthToken": [],
+            "AccessToken": []
+          }
+        ]
       }
     },
     "/app/v3/api/catalog/products/{productId}/skus": {
@@ -470,7 +516,13 @@
         "x-sdkwork-resource": "catalog.products.skus",
         "x-sdkwork-request-context": "WebRequestContext",
         "x-sdkwork-api-surface": "app-api",
-        "x-sdkwork-pagination-mode": "offset"
+        "x-sdkwork-pagination-mode": "offset",
+        "security": [
+          {
+            "AuthToken": [],
+            "AccessToken": []
+          }
+        ]
       }
     },
     "/app/v3/api/catalog/skus/{skuId}": {
@@ -542,7 +594,13 @@
         "x-sdkwork-domain": "commerce",
         "x-sdkwork-resource": "catalog.skus",
         "x-sdkwork-request-context": "WebRequestContext",
-        "x-sdkwork-api-surface": "app-api"
+        "x-sdkwork-api-surface": "app-api",
+        "security": [
+          {
+            "AuthToken": [],
+            "AccessToken": []
+          }
+        ]
       }
     },
     "/app/v3/api/cart/items": {
@@ -608,7 +666,13 @@
         "x-sdkwork-resource": "cart.items",
         "x-sdkwork-request-context": "WebRequestContext",
         "x-sdkwork-api-surface": "app-api",
-        "x-sdkwork-pagination-mode": "offset"
+        "x-sdkwork-pagination-mode": "offset",
+        "security": [
+          {
+            "AuthToken": [],
+            "AccessToken": []
+          }
+        ]
       },
       "post": {
         "tags": [
@@ -673,7 +737,14 @@
         "x-sdkwork-domain": "commerce",
         "x-sdkwork-resource": "cart.items",
         "x-sdkwork-request-context": "WebRequestContext",
-        "x-sdkwork-api-surface": "app-api"
+        "x-sdkwork-api-surface": "app-api",
+        "parameters": [],
+        "security": [
+          {
+            "AuthToken": [],
+            "AccessToken": []
+          }
+        ]
       }
     },
     "/app/v3/api/cart/items/{cartItemId}": {
@@ -755,7 +826,13 @@
         "x-sdkwork-domain": "commerce",
         "x-sdkwork-resource": "cart.items",
         "x-sdkwork-request-context": "WebRequestContext",
-        "x-sdkwork-api-surface": "app-api"
+        "x-sdkwork-api-surface": "app-api",
+        "security": [
+          {
+            "AuthToken": [],
+            "AccessToken": []
+          }
+        ]
       },
       "delete": {
         "tags": [
@@ -818,7 +895,13 @@
         "x-sdkwork-domain": "commerce",
         "x-sdkwork-resource": "cart.items",
         "x-sdkwork-request-context": "WebRequestContext",
-        "x-sdkwork-api-surface": "app-api"
+        "x-sdkwork-api-surface": "app-api",
+        "security": [
+          {
+            "AuthToken": [],
+            "AccessToken": []
+          }
+        ]
       }
     },
     "/app/v3/api/addresses": {
@@ -884,7 +967,13 @@
         "x-sdkwork-resource": "addresses",
         "x-sdkwork-request-context": "WebRequestContext",
         "x-sdkwork-api-surface": "app-api",
-        "x-sdkwork-pagination-mode": "offset"
+        "x-sdkwork-pagination-mode": "offset",
+        "security": [
+          {
+            "AuthToken": [],
+            "AccessToken": []
+          }
+        ]
       },
       "post": {
         "tags": [
@@ -949,7 +1038,14 @@
         "x-sdkwork-domain": "commerce",
         "x-sdkwork-resource": "addresses",
         "x-sdkwork-request-context": "WebRequestContext",
-        "x-sdkwork-api-surface": "app-api"
+        "x-sdkwork-api-surface": "app-api",
+        "parameters": [],
+        "security": [
+          {
+            "AuthToken": [],
+            "AccessToken": []
+          }
+        ]
       }
     },
     "/app/v3/api/addresses/{addressId}": {
@@ -1031,7 +1127,13 @@
         "x-sdkwork-domain": "commerce",
         "x-sdkwork-resource": "addresses",
         "x-sdkwork-request-context": "WebRequestContext",
-        "x-sdkwork-api-surface": "app-api"
+        "x-sdkwork-api-surface": "app-api",
+        "security": [
+          {
+            "AuthToken": [],
+            "AccessToken": []
+          }
+        ]
       },
       "delete": {
         "tags": [
@@ -1094,7 +1196,13 @@
         "x-sdkwork-domain": "commerce",
         "x-sdkwork-resource": "addresses",
         "x-sdkwork-request-context": "WebRequestContext",
-        "x-sdkwork-api-surface": "app-api"
+        "x-sdkwork-api-surface": "app-api",
+        "security": [
+          {
+            "AuthToken": [],
+            "AccessToken": []
+          }
+        ]
       }
     },
     "/app/v3/api/addresses/{addressId}/default_selection": {
@@ -1166,7 +1274,13 @@
         "x-sdkwork-domain": "commerce",
         "x-sdkwork-resource": "addresses.defaultSelection",
         "x-sdkwork-request-context": "WebRequestContext",
-        "x-sdkwork-api-surface": "app-api"
+        "x-sdkwork-api-surface": "app-api",
+        "security": [
+          {
+            "AuthToken": [],
+            "AccessToken": []
+          }
+        ]
       }
     }
   },
@@ -1531,8 +1645,9 @@
             "type": "string"
           },
           "sortOrder": {
-            "type": "integer",
-            "format": "int64"
+            "type": "string",
+            "format": "int64",
+            "x-sdkwork-int64-string": true
           },
           "createdAt": {
             "type": "string"
@@ -1573,15 +1688,17 @@
             "type": "string"
           },
           "levelNo": {
-            "type": "integer",
-            "format": "int64"
+            "type": "string",
+            "format": "int64",
+            "x-sdkwork-int64-string": true
           },
           "name": {
             "type": "string"
           },
           "sortOrder": {
-            "type": "integer",
-            "format": "int64"
+            "type": "string",
+            "format": "int64",
+            "x-sdkwork-int64-string": true
           },
           "status": {
             "type": "string"
@@ -1752,9 +1869,10 @@
             "type": "string"
           },
           "quantity": {
-            "type": "integer",
+            "type": "string",
             "format": "int64",
-            "minimum": 1
+            "minimum": 1,
+            "x-sdkwork-int64-string": true
           },
           "createdAt": {
             "type": "string"
