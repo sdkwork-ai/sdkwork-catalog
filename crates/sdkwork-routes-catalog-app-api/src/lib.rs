@@ -24,3 +24,14 @@ pub async fn build_catalog_app_router_with_framework(host: Arc<CatalogServiceHos
     };
     build_catalog_app_router_with_framework_postgres(pool.clone()).await
 }
+
+use sdkwork_web_core::HttpRouteManifest;
+use sqlx::PgPool;
+
+pub fn gateway_route_manifest() -> HttpRouteManifest {
+    gateway_route_manifest()
+}
+
+pub async fn gateway_mount(pool: PgPool) -> axum::Router {
+    build_catalog_app_router_with_framework_postgres(pool).await
+}

@@ -8,27 +8,54 @@
     "x-sdkwork-sdk-family": "sdkwork-catalog-app-sdk",
     "x-sdkwork-owner": "sdkwork-catalog"
   },
-  "servers": [{ "url": "/" }],
+  "servers": [
+    {
+      "url": "/"
+    }
+  ],
   "tags": [
-    { "name": "catalog", "description": "Active product catalog resources." },
-    { "name": "cart", "description": "Authenticated user's cart resources." },
-    { "name": "delivery", "description": "Authenticated user's delivery addresses." }
+    {
+      "name": "catalog",
+      "description": "Active product catalog resources."
+    },
+    {
+      "name": "cart",
+      "description": "Authenticated user's cart resources."
+    },
+    {
+      "name": "delivery",
+      "description": "Authenticated user's delivery addresses."
+    }
   ],
   "paths": {
     "/app/v3/api/catalog/attributes": {
       "get": {
-        "tags": ["catalog"],
+        "tags": [
+          "catalog"
+        ],
         "summary": "List active catalog attributes.",
         "operationId": "attributes.list",
         "parameters": [
-          { "$ref": "#/components/parameters/Page" },
-          { "$ref": "#/components/parameters/PageSize" }
+          {
+            "$ref": "#/components/parameters/Page"
+          },
+          {
+            "$ref": "#/components/parameters/PageSize"
+          }
         ],
         "responses": {
-          "200": { "$ref": "#/components/responses/CatalogAttributeListSuccess" },
-          "400": { "$ref": "#/components/responses/BadRequest" },
-          "401": { "$ref": "#/components/responses/Unauthorized" },
-          "500": { "$ref": "#/components/responses/InternalError" }
+          "200": {
+            "$ref": "#/components/responses/CatalogAttributeListSuccess"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalError"
+          }
         },
         "x-sdkwork-owner": "sdkwork-catalog",
         "x-sdkwork-api-authority": "sdkwork-catalog-app-api",
@@ -41,19 +68,40 @@
     },
     "/app/v3/api/catalog/categories": {
       "get": {
-        "tags": ["catalog"],
+        "tags": [
+          "catalog"
+        ],
         "summary": "List active catalog categories.",
         "operationId": "categories.list",
         "parameters": [
-          { "name": "parent_id", "in": "query", "required": false, "schema": { "type": "string" } },
-          { "$ref": "#/components/parameters/Page" },
-          { "$ref": "#/components/parameters/PageSize" }
+          {
+            "name": "parent_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/Page"
+          },
+          {
+            "$ref": "#/components/parameters/PageSize"
+          }
         ],
         "responses": {
-          "200": { "$ref": "#/components/responses/CatalogCategoryListSuccess" },
-          "400": { "$ref": "#/components/responses/BadRequest" },
-          "401": { "$ref": "#/components/responses/Unauthorized" },
-          "500": { "$ref": "#/components/responses/InternalError" }
+          "200": {
+            "$ref": "#/components/responses/CatalogCategoryListSuccess"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalError"
+          }
         },
         "x-sdkwork-owner": "sdkwork-catalog",
         "x-sdkwork-api-authority": "sdkwork-catalog-app-api",
@@ -66,16 +114,32 @@
     },
     "/app/v3/api/catalog/categories/{categoryId}": {
       "get": {
-        "tags": ["catalog"],
+        "tags": [
+          "catalog"
+        ],
         "summary": "Retrieve an active catalog category.",
         "operationId": "categories.retrieve",
-        "parameters": [{ "$ref": "#/components/parameters/CategoryId" }],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/CategoryId"
+          }
+        ],
         "responses": {
-          "200": { "$ref": "#/components/responses/CatalogCategorySuccess" },
-          "400": { "$ref": "#/components/responses/BadRequest" },
-          "401": { "$ref": "#/components/responses/Unauthorized" },
-          "404": { "$ref": "#/components/responses/NotFound" },
-          "500": { "$ref": "#/components/responses/InternalError" }
+          "200": {
+            "$ref": "#/components/responses/CatalogCategorySuccess"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalError"
+          }
         },
         "x-sdkwork-owner": "sdkwork-catalog",
         "x-sdkwork-api-authority": "sdkwork-catalog-app-api",
@@ -87,20 +151,48 @@
     },
     "/app/v3/api/catalog/products": {
       "get": {
-        "tags": ["catalog"],
+        "tags": [
+          "catalog"
+        ],
         "summary": "List active catalog products.",
         "operationId": "products.list",
         "parameters": [
-          { "name": "category_id", "in": "query", "required": false, "schema": { "type": "string" } },
-          { "name": "product_type", "in": "query", "required": false, "schema": { "type": "string" } },
-          { "$ref": "#/components/parameters/Page" },
-          { "$ref": "#/components/parameters/PageSize" }
+          {
+            "name": "category_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "product_type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/Page"
+          },
+          {
+            "$ref": "#/components/parameters/PageSize"
+          }
         ],
         "responses": {
-          "200": { "$ref": "#/components/responses/CatalogProductListSuccess" },
-          "400": { "$ref": "#/components/responses/BadRequest" },
-          "401": { "$ref": "#/components/responses/Unauthorized" },
-          "500": { "$ref": "#/components/responses/InternalError" }
+          "200": {
+            "$ref": "#/components/responses/CatalogProductListSuccess"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalError"
+          }
         },
         "x-sdkwork-owner": "sdkwork-catalog",
         "x-sdkwork-api-authority": "sdkwork-catalog-app-api",
@@ -113,16 +205,32 @@
     },
     "/app/v3/api/catalog/products/{productId}": {
       "get": {
-        "tags": ["catalog"],
+        "tags": [
+          "catalog"
+        ],
         "summary": "Retrieve an active catalog product.",
         "operationId": "products.retrieve",
-        "parameters": [{ "$ref": "#/components/parameters/ProductId" }],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ProductId"
+          }
+        ],
         "responses": {
-          "200": { "$ref": "#/components/responses/CatalogProductSuccess" },
-          "400": { "$ref": "#/components/responses/BadRequest" },
-          "401": { "$ref": "#/components/responses/Unauthorized" },
-          "404": { "$ref": "#/components/responses/NotFound" },
-          "500": { "$ref": "#/components/responses/InternalError" }
+          "200": {
+            "$ref": "#/components/responses/CatalogProductSuccess"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalError"
+          }
         },
         "x-sdkwork-owner": "sdkwork-catalog",
         "x-sdkwork-api-authority": "sdkwork-catalog-app-api",
@@ -134,20 +242,38 @@
     },
     "/app/v3/api/catalog/products/{productId}/skus": {
       "get": {
-        "tags": ["catalog"],
+        "tags": [
+          "catalog"
+        ],
         "summary": "List active SKUs for a catalog product.",
         "operationId": "products.skus.list",
         "parameters": [
-          { "$ref": "#/components/parameters/ProductId" },
-          { "$ref": "#/components/parameters/Page" },
-          { "$ref": "#/components/parameters/PageSize" }
+          {
+            "$ref": "#/components/parameters/ProductId"
+          },
+          {
+            "$ref": "#/components/parameters/Page"
+          },
+          {
+            "$ref": "#/components/parameters/PageSize"
+          }
         ],
         "responses": {
-          "200": { "$ref": "#/components/responses/CatalogSkuListSuccess" },
-          "400": { "$ref": "#/components/responses/BadRequest" },
-          "401": { "$ref": "#/components/responses/Unauthorized" },
-          "404": { "$ref": "#/components/responses/NotFound" },
-          "500": { "$ref": "#/components/responses/InternalError" }
+          "200": {
+            "$ref": "#/components/responses/CatalogSkuListSuccess"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalError"
+          }
         },
         "x-sdkwork-owner": "sdkwork-catalog",
         "x-sdkwork-api-authority": "sdkwork-catalog-app-api",
@@ -160,16 +286,32 @@
     },
     "/app/v3/api/catalog/skus/{skuId}": {
       "get": {
-        "tags": ["catalog"],
+        "tags": [
+          "catalog"
+        ],
         "summary": "Retrieve an active catalog SKU.",
         "operationId": "skus.retrieve",
-        "parameters": [{ "$ref": "#/components/parameters/SkuId" }],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/SkuId"
+          }
+        ],
         "responses": {
-          "200": { "$ref": "#/components/responses/CatalogSkuSuccess" },
-          "400": { "$ref": "#/components/responses/BadRequest" },
-          "401": { "$ref": "#/components/responses/Unauthorized" },
-          "404": { "$ref": "#/components/responses/NotFound" },
-          "500": { "$ref": "#/components/responses/InternalError" }
+          "200": {
+            "$ref": "#/components/responses/CatalogSkuSuccess"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalError"
+          }
         },
         "x-sdkwork-owner": "sdkwork-catalog",
         "x-sdkwork-api-authority": "sdkwork-catalog-app-api",
@@ -181,18 +323,32 @@
     },
     "/app/v3/api/cart/items": {
       "get": {
-        "tags": ["cart"],
+        "tags": [
+          "cart"
+        ],
         "summary": "List the authenticated user's cart items.",
         "operationId": "items.list",
         "parameters": [
-          { "$ref": "#/components/parameters/Page" },
-          { "$ref": "#/components/parameters/PageSize" }
+          {
+            "$ref": "#/components/parameters/Page"
+          },
+          {
+            "$ref": "#/components/parameters/PageSize"
+          }
         ],
         "responses": {
-          "200": { "$ref": "#/components/responses/CartItemListSuccess" },
-          "400": { "$ref": "#/components/responses/BadRequest" },
-          "401": { "$ref": "#/components/responses/Unauthorized" },
-          "500": { "$ref": "#/components/responses/InternalError" }
+          "200": {
+            "$ref": "#/components/responses/CartItemListSuccess"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalError"
+          }
         },
         "x-sdkwork-owner": "sdkwork-catalog",
         "x-sdkwork-api-authority": "sdkwork-catalog-app-api",
@@ -203,43 +359,82 @@
         "x-sdkwork-pagination-mode": "offset"
       },
       "post": {
-        "tags": ["cart"],
+        "tags": [
+          "cart"
+        ],
         "summary": "Add an item to the authenticated user's cart.",
         "operationId": "items.create",
         "requestBody": {
           "required": true,
-          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AddCartItemRequest" } } }
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddCartItemRequest"
+              }
+            }
+          }
         },
         "responses": {
-          "201": { "$ref": "#/components/responses/CartItemSuccess" },
-          "400": { "$ref": "#/components/responses/BadRequest" },
-          "401": { "$ref": "#/components/responses/Unauthorized" },
-          "500": { "$ref": "#/components/responses/InternalError" }
+          "201": {
+            "$ref": "#/components/responses/CartItemSuccess"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalError"
+          }
         },
         "x-sdkwork-owner": "sdkwork-catalog",
         "x-sdkwork-api-authority": "sdkwork-catalog-app-api",
         "x-sdkwork-domain": "commerce",
         "x-sdkwork-resource": "cart.items",
         "x-sdkwork-request-context": "WebRequestContext",
-        "x-sdkwork-api-surface": "app-api"
+        "x-sdkwork-api-surface": "app-api",
+        "parameters": []
       }
     },
     "/app/v3/api/cart/items/{cartItemId}": {
       "patch": {
-        "tags": ["cart"],
+        "tags": [
+          "cart"
+        ],
         "summary": "Update a cart item quantity.",
         "operationId": "items.update",
-        "parameters": [{ "$ref": "#/components/parameters/CartItemId" }],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/CartItemId"
+          }
+        ],
         "requestBody": {
           "required": true,
-          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UpdateCartItemRequest" } } }
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCartItemRequest"
+              }
+            }
+          }
         },
         "responses": {
-          "200": { "$ref": "#/components/responses/CartItemSuccess" },
-          "400": { "$ref": "#/components/responses/BadRequest" },
-          "401": { "$ref": "#/components/responses/Unauthorized" },
-          "404": { "$ref": "#/components/responses/NotFound" },
-          "500": { "$ref": "#/components/responses/InternalError" }
+          "200": {
+            "$ref": "#/components/responses/CartItemSuccess"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalError"
+          }
         },
         "x-sdkwork-owner": "sdkwork-catalog",
         "x-sdkwork-api-authority": "sdkwork-catalog-app-api",
@@ -249,16 +444,32 @@
         "x-sdkwork-api-surface": "app-api"
       },
       "delete": {
-        "tags": ["cart"],
+        "tags": [
+          "cart"
+        ],
         "summary": "Delete a cart item.",
         "operationId": "items.delete",
-        "parameters": [{ "$ref": "#/components/parameters/CartItemId" }],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/CartItemId"
+          }
+        ],
         "responses": {
-          "204": { "description": "Cart item deleted." },
-          "400": { "$ref": "#/components/responses/BadRequest" },
-          "401": { "$ref": "#/components/responses/Unauthorized" },
-          "404": { "$ref": "#/components/responses/NotFound" },
-          "500": { "$ref": "#/components/responses/InternalError" }
+          "204": {
+            "description": "Cart item deleted."
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalError"
+          }
         },
         "x-sdkwork-owner": "sdkwork-catalog",
         "x-sdkwork-api-authority": "sdkwork-catalog-app-api",
@@ -270,18 +481,32 @@
     },
     "/app/v3/api/addresses": {
       "get": {
-        "tags": ["delivery"],
+        "tags": [
+          "delivery"
+        ],
         "summary": "List the authenticated user's delivery addresses.",
         "operationId": "addresses.list",
         "parameters": [
-          { "$ref": "#/components/parameters/Page" },
-          { "$ref": "#/components/parameters/PageSize" }
+          {
+            "$ref": "#/components/parameters/Page"
+          },
+          {
+            "$ref": "#/components/parameters/PageSize"
+          }
         ],
         "responses": {
-          "200": { "$ref": "#/components/responses/AddressListSuccess" },
-          "400": { "$ref": "#/components/responses/BadRequest" },
-          "401": { "$ref": "#/components/responses/Unauthorized" },
-          "500": { "$ref": "#/components/responses/InternalError" }
+          "200": {
+            "$ref": "#/components/responses/AddressListSuccess"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalError"
+          }
         },
         "x-sdkwork-owner": "sdkwork-catalog",
         "x-sdkwork-api-authority": "sdkwork-catalog-app-api",
@@ -292,43 +517,82 @@
         "x-sdkwork-pagination-mode": "offset"
       },
       "post": {
-        "tags": ["delivery"],
+        "tags": [
+          "delivery"
+        ],
         "summary": "Create a delivery address.",
         "operationId": "addresses.create",
         "requestBody": {
           "required": true,
-          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CreateAddressRequest" } } }
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateAddressRequest"
+              }
+            }
+          }
         },
         "responses": {
-          "201": { "$ref": "#/components/responses/AddressSuccess" },
-          "400": { "$ref": "#/components/responses/BadRequest" },
-          "401": { "$ref": "#/components/responses/Unauthorized" },
-          "500": { "$ref": "#/components/responses/InternalError" }
+          "201": {
+            "$ref": "#/components/responses/AddressSuccess"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalError"
+          }
         },
         "x-sdkwork-owner": "sdkwork-catalog",
         "x-sdkwork-api-authority": "sdkwork-catalog-app-api",
         "x-sdkwork-domain": "commerce",
         "x-sdkwork-resource": "addresses",
         "x-sdkwork-request-context": "WebRequestContext",
-        "x-sdkwork-api-surface": "app-api"
+        "x-sdkwork-api-surface": "app-api",
+        "parameters": []
       }
     },
     "/app/v3/api/addresses/{addressId}": {
       "patch": {
-        "tags": ["delivery"],
+        "tags": [
+          "delivery"
+        ],
         "summary": "Update a delivery address.",
         "operationId": "addresses.update",
-        "parameters": [{ "$ref": "#/components/parameters/AddressId" }],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AddressId"
+          }
+        ],
         "requestBody": {
           "required": true,
-          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UpdateAddressRequest" } } }
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateAddressRequest"
+              }
+            }
+          }
         },
         "responses": {
-          "200": { "$ref": "#/components/responses/AddressSuccess" },
-          "400": { "$ref": "#/components/responses/BadRequest" },
-          "401": { "$ref": "#/components/responses/Unauthorized" },
-          "404": { "$ref": "#/components/responses/NotFound" },
-          "500": { "$ref": "#/components/responses/InternalError" }
+          "200": {
+            "$ref": "#/components/responses/AddressSuccess"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalError"
+          }
         },
         "x-sdkwork-owner": "sdkwork-catalog",
         "x-sdkwork-api-authority": "sdkwork-catalog-app-api",
@@ -338,16 +602,32 @@
         "x-sdkwork-api-surface": "app-api"
       },
       "delete": {
-        "tags": ["delivery"],
+        "tags": [
+          "delivery"
+        ],
         "summary": "Delete a delivery address.",
         "operationId": "addresses.delete",
-        "parameters": [{ "$ref": "#/components/parameters/AddressId" }],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AddressId"
+          }
+        ],
         "responses": {
-          "204": { "description": "Address deleted." },
-          "400": { "$ref": "#/components/responses/BadRequest" },
-          "401": { "$ref": "#/components/responses/Unauthorized" },
-          "404": { "$ref": "#/components/responses/NotFound" },
-          "500": { "$ref": "#/components/responses/InternalError" }
+          "204": {
+            "description": "Address deleted."
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalError"
+          }
         },
         "x-sdkwork-owner": "sdkwork-catalog",
         "x-sdkwork-api-authority": "sdkwork-catalog-app-api",
@@ -359,16 +639,32 @@
     },
     "/app/v3/api/addresses/{addressId}/default_selection": {
       "put": {
-        "tags": ["delivery"],
+        "tags": [
+          "delivery"
+        ],
         "summary": "Set the default delivery address.",
         "operationId": "addresses.defaultSelection.update",
-        "parameters": [{ "$ref": "#/components/parameters/AddressId" }],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AddressId"
+          }
+        ],
         "responses": {
-          "200": { "$ref": "#/components/responses/AddressSuccess" },
-          "400": { "$ref": "#/components/responses/BadRequest" },
-          "401": { "$ref": "#/components/responses/Unauthorized" },
-          "404": { "$ref": "#/components/responses/NotFound" },
-          "500": { "$ref": "#/components/responses/InternalError" }
+          "200": {
+            "$ref": "#/components/responses/AddressSuccess"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalError"
+          }
         },
         "x-sdkwork-owner": "sdkwork-catalog",
         "x-sdkwork-api-authority": "sdkwork-catalog-app-api",
@@ -381,187 +677,1132 @@
   },
   "components": {
     "securitySchemes": {
-      "AuthToken": { "type": "http", "scheme": "bearer", "bearerFormat": "JWT" },
-      "AccessToken": { "type": "apiKey", "in": "header", "name": "Access-Token" }
+      "AuthToken": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      },
+      "AccessToken": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Access-Token"
+      }
     },
     "parameters": {
-      "Page": { "name": "page", "in": "query", "required": false, "schema": { "type": "integer", "minimum": 1, "default": 1 } },
-      "PageSize": { "name": "page_size", "in": "query", "required": false, "schema": { "type": "integer", "minimum": 1, "maximum": 200, "default": 20 } },
-      "CategoryId": { "name": "categoryId", "in": "path", "required": true, "schema": { "type": "string" } },
-      "ProductId": { "name": "productId", "in": "path", "required": true, "schema": { "type": "string" } },
-      "SkuId": { "name": "skuId", "in": "path", "required": true, "schema": { "type": "string" } },
-      "CartItemId": { "name": "cartItemId", "in": "path", "required": true, "schema": { "type": "string" } },
-      "AddressId": { "name": "addressId", "in": "path", "required": true, "schema": { "type": "string" } }
+      "Page": {
+        "name": "page",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 1
+        }
+      },
+      "PageSize": {
+        "name": "page_size",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 200,
+          "default": 20
+        }
+      },
+      "CategoryId": {
+        "name": "categoryId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "ProductId": {
+        "name": "productId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "SkuId": {
+        "name": "skuId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "CartItemId": {
+        "name": "cartItemId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "AddressId": {
+        "name": "addressId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
     },
     "responses": {
-      "CatalogAttributeListSuccess": { "description": "Catalog attribute page.", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CatalogAttributeListResponse" } } } },
-      "CatalogCategoryListSuccess": { "description": "Catalog category page.", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CatalogCategoryListResponse" } } } },
-      "CatalogCategorySuccess": { "description": "Catalog category.", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CatalogCategoryResponse" } } } },
-      "CatalogProductListSuccess": { "description": "Catalog product page.", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CatalogProductListResponse" } } } },
-      "CatalogProductSuccess": { "description": "Catalog product.", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CatalogProductResponse" } } } },
-      "CatalogSkuListSuccess": { "description": "Catalog SKU page.", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CatalogSkuListResponse" } } } },
-      "CatalogSkuSuccess": { "description": "Catalog SKU.", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CatalogSkuResponse" } } } },
-      "CartItemListSuccess": { "description": "Cart item page.", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CartItemListResponse" } } } },
-      "CartItemSuccess": { "description": "Cart item.", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CartItemResponse" } } } },
-      "AddressListSuccess": { "description": "Address page.", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AddressListResponse" } } } },
-      "AddressSuccess": { "description": "Address.", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AddressResponse" } } } },
-      "BadRequest": { "description": "Invalid request.", "content": { "application/problem+json": { "schema": { "$ref": "#/components/schemas/ProblemDetail" } } } },
-      "Unauthorized": { "description": "Authentication required.", "content": { "application/problem+json": { "schema": { "$ref": "#/components/schemas/ProblemDetail" } } } },
-      "NotFound": { "description": "Resource not found.", "content": { "application/problem+json": { "schema": { "$ref": "#/components/schemas/ProblemDetail" } } } },
-      "InternalError": { "description": "Internal server error.", "content": { "application/problem+json": { "schema": { "$ref": "#/components/schemas/ProblemDetail" } } } }
+      "CatalogAttributeListSuccess": {
+        "description": "Catalog attribute page.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CatalogAttributeListResponse"
+            }
+          }
+        }
+      },
+      "CatalogCategoryListSuccess": {
+        "description": "Catalog category page.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CatalogCategoryListResponse"
+            }
+          }
+        }
+      },
+      "CatalogCategorySuccess": {
+        "description": "Catalog category.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CatalogCategoryResponse"
+            }
+          }
+        }
+      },
+      "CatalogProductListSuccess": {
+        "description": "Catalog product page.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CatalogProductListResponse"
+            }
+          }
+        }
+      },
+      "CatalogProductSuccess": {
+        "description": "Catalog product.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CatalogProductResponse"
+            }
+          }
+        }
+      },
+      "CatalogSkuListSuccess": {
+        "description": "Catalog SKU page.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CatalogSkuListResponse"
+            }
+          }
+        }
+      },
+      "CatalogSkuSuccess": {
+        "description": "Catalog SKU.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CatalogSkuResponse"
+            }
+          }
+        }
+      },
+      "CartItemListSuccess": {
+        "description": "Cart item page.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CartItemListResponse"
+            }
+          }
+        }
+      },
+      "CartItemSuccess": {
+        "description": "Cart item.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CartItemResponse"
+            }
+          }
+        }
+      },
+      "AddressListSuccess": {
+        "description": "Address page.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/AddressListResponse"
+            }
+          }
+        }
+      },
+      "AddressSuccess": {
+        "description": "Address.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/AddressResponse"
+            }
+          }
+        }
+      },
+      "BadRequest": {
+        "description": "Invalid request.",
+        "content": {
+          "application/problem+json": {
+            "schema": {
+              "$ref": "#/components/schemas/ProblemDetail"
+            }
+          }
+        }
+      },
+      "Unauthorized": {
+        "description": "Authentication required.",
+        "content": {
+          "application/problem+json": {
+            "schema": {
+              "$ref": "#/components/schemas/ProblemDetail"
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "Resource not found.",
+        "content": {
+          "application/problem+json": {
+            "schema": {
+              "$ref": "#/components/schemas/ProblemDetail"
+            }
+          }
+        }
+      },
+      "InternalError": {
+        "description": "Internal server error.",
+        "content": {
+          "application/problem+json": {
+            "schema": {
+              "$ref": "#/components/schemas/ProblemDetail"
+            }
+          }
+        }
+      }
     },
     "schemas": {
       "ProblemDetail": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["type", "title", "status", "code", "traceId"],
+        "required": [
+          "type",
+          "title",
+          "status",
+          "code",
+          "traceId"
+        ],
         "properties": {
-          "type": { "type": "string", "format": "uri-reference" },
-          "title": { "type": "string" },
-          "status": { "type": "integer", "format": "int32", "minimum": 400, "maximum": 599 },
-          "detail": { "type": "string" },
-          "code": { "type": "integer", "format": "int32", "minimum": 40001, "maximum": 79999 },
-          "traceId": { "type": "string", "format": "uuid" }
+          "type": {
+            "type": "string",
+            "format": "uri-reference"
+          },
+          "title": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 400,
+            "maximum": 599
+          },
+          "detail": {
+            "type": "string"
+          },
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 40001,
+            "maximum": 79999
+          },
+          "traceId": {
+            "type": "string",
+            "format": "uuid"
+          }
         }
       },
       "PageInfo": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["mode", "page", "pageSize", "totalItems", "totalPages", "hasMore"],
+        "required": [
+          "mode",
+          "page",
+          "pageSize",
+          "totalItems",
+          "totalPages",
+          "hasMore"
+        ],
         "properties": {
-          "mode": { "type": "string", "const": "offset" },
-          "page": { "type": "integer", "minimum": 1 },
-          "pageSize": { "type": "integer", "minimum": 1, "maximum": 200 },
-          "totalItems": { "type": "string", "pattern": "^[0-9]+$" },
-          "totalPages": { "type": "integer", "minimum": 0 },
-          "hasMore": { "type": "boolean" }
+          "mode": {
+            "type": "string",
+            "const": "offset"
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "pageSize": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 200
+          },
+          "totalItems": {
+            "type": "string",
+            "pattern": "^[0-9]+$"
+          },
+          "totalPages": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "hasMore": {
+            "type": "boolean"
+          }
         }
       },
       "SdkWorkApiResponse": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["code", "data", "traceId"],
+        "required": [
+          "code",
+          "data",
+          "traceId"
+        ],
         "properties": {
-          "code": { "type": "integer", "format": "int32", "const": 0 },
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "const": 0
+          },
           "data": {},
-          "traceId": { "type": "string", "format": "uuid" }
+          "traceId": {
+            "type": "string",
+            "format": "uuid"
+          }
         }
       },
       "CatalogAttribute": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["id", "attributeNo", "name", "valueType", "scope", "status", "sortOrder", "createdAt", "updatedAt"],
+        "required": [
+          "id",
+          "attributeNo",
+          "name",
+          "valueType",
+          "scope",
+          "status",
+          "sortOrder",
+          "createdAt",
+          "updatedAt"
+        ],
         "properties": {
-          "id": { "type": "string" }, "attributeNo": { "type": "string" }, "name": { "type": "string" },
-          "valueType": { "type": "string" }, "scope": { "type": "string" }, "status": { "type": "string" },
-          "sortOrder": { "type": "integer", "format": "int64" }, "createdAt": { "type": "string" }, "updatedAt": { "type": "string" }
+          "id": {
+            "type": "string"
+          },
+          "attributeNo": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "valueType": {
+            "type": "string"
+          },
+          "scope": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "sortOrder": {
+            "type": "string",
+            "format": "int64",
+            "x-sdkwork-int64-string": true
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
         }
       },
       "CatalogCategory": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["id", "categoryNo", "path", "levelNo", "name", "sortOrder", "status", "createdAt", "updatedAt"],
+        "required": [
+          "id",
+          "categoryNo",
+          "path",
+          "levelNo",
+          "name",
+          "sortOrder",
+          "status",
+          "createdAt",
+          "updatedAt"
+        ],
         "properties": {
-          "id": { "type": "string" }, "categoryNo": { "type": "string" }, "parentId": { "type": ["string", "null"] },
-          "path": { "type": "string" }, "levelNo": { "type": "integer", "format": "int64" }, "name": { "type": "string" },
-          "sortOrder": { "type": "integer", "format": "int64" }, "status": { "type": "string" },
-          "createdAt": { "type": "string" }, "updatedAt": { "type": "string" }
+          "id": {
+            "type": "string"
+          },
+          "categoryNo": {
+            "type": "string"
+          },
+          "parentId": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "path": {
+            "type": "string"
+          },
+          "levelNo": {
+            "type": "string",
+            "format": "int64",
+            "x-sdkwork-int64-string": true
+          },
+          "name": {
+            "type": "string"
+          },
+          "sortOrder": {
+            "type": "string",
+            "format": "int64",
+            "x-sdkwork-int64-string": true
+          },
+          "status": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
         }
       },
       "CatalogProduct": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["id", "spuNo", "title", "productType", "status", "visibleSurfaces", "createdAt", "updatedAt"],
+        "required": [
+          "id",
+          "spuNo",
+          "title",
+          "productType",
+          "status",
+          "visibleSurfaces",
+          "createdAt",
+          "updatedAt"
+        ],
         "properties": {
-          "id": { "type": "string" }, "spuNo": { "type": "string" }, "title": { "type": "string" },
-          "subtitle": { "type": ["string", "null"] }, "description": { "type": ["string", "null"] },
-          "productType": { "type": "string" }, "categoryId": { "type": ["string", "null"] }, "status": { "type": "string" },
-          "publishedAt": { "type": ["string", "null"] }, "visibleSurfaces": { "type": "string" },
-          "createdAt": { "type": "string" }, "updatedAt": { "type": "string" }
+          "id": {
+            "type": "string"
+          },
+          "spuNo": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "subtitle": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "productType": {
+            "type": "string"
+          },
+          "categoryId": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "status": {
+            "type": "string"
+          },
+          "publishedAt": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "visibleSurfaces": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
         }
       },
       "CatalogSku": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["id", "spuId", "skuNo", "name", "title", "priceAmount", "currencyCode", "fulfillmentType", "inventoryTracking", "status", "createdAt", "updatedAt"],
+        "required": [
+          "id",
+          "spuId",
+          "skuNo",
+          "name",
+          "title",
+          "priceAmount",
+          "currencyCode",
+          "fulfillmentType",
+          "inventoryTracking",
+          "status",
+          "createdAt",
+          "updatedAt"
+        ],
         "properties": {
-          "id": { "type": "string" }, "spuId": { "type": "string" }, "skuNo": { "type": "string" },
-          "name": { "type": "string" }, "title": { "type": "string" }, "priceAmount": { "type": "string", "pattern": "^-?[0-9]+(\\.[0-9]+)?$" },
-          "originalPriceAmount": { "type": ["string", "null"] }, "currencyCode": { "type": "string", "pattern": "^[A-Z]{3}$" },
-          "fulfillmentType": { "type": "string" }, "inventoryTracking": { "type": "string" }, "status": { "type": "string" },
-          "publishedAt": { "type": ["string", "null"] }, "specJson": { "type": ["string", "null"] },
-          "createdAt": { "type": "string" }, "updatedAt": { "type": "string" }
+          "id": {
+            "type": "string"
+          },
+          "spuId": {
+            "type": "string"
+          },
+          "skuNo": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "priceAmount": {
+            "type": "string",
+            "pattern": "^-?[0-9]+(\\.[0-9]+)?$"
+          },
+          "originalPriceAmount": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "currencyCode": {
+            "type": "string",
+            "pattern": "^[A-Z]{3}$"
+          },
+          "fulfillmentType": {
+            "type": "string"
+          },
+          "inventoryTracking": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "publishedAt": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "specJson": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
         }
       },
       "CartItem": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["id", "skuId", "quantity", "createdAt", "updatedAt"],
+        "required": [
+          "id",
+          "skuId",
+          "quantity",
+          "createdAt",
+          "updatedAt"
+        ],
         "properties": {
-          "id": { "type": "string" }, "skuId": { "type": "string" }, "quantity": { "type": "integer", "format": "int64", "minimum": 1 },
-          "createdAt": { "type": "string" }, "updatedAt": { "type": "string" }
+          "id": {
+            "type": "string"
+          },
+          "skuId": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "string",
+            "format": "int64",
+            "minimum": 1,
+            "x-sdkwork-int64-string": true
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
         }
       },
       "Address": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["id", "receiverName", "receiverPhone", "countryCode", "province", "city", "detailAddress", "isDefault", "status", "createdAt", "updatedAt"],
+        "required": [
+          "id",
+          "receiverName",
+          "receiverPhone",
+          "countryCode",
+          "province",
+          "city",
+          "detailAddress",
+          "isDefault",
+          "status",
+          "createdAt",
+          "updatedAt"
+        ],
         "properties": {
-          "id": { "type": "string" }, "receiverName": { "type": "string" }, "receiverPhone": { "type": "string" },
-          "countryCode": { "type": "string" }, "province": { "type": "string" }, "city": { "type": "string" },
-          "detailAddress": { "type": "string" }, "isDefault": { "type": "boolean" }, "status": { "type": "string" },
-          "createdAt": { "type": "string" }, "updatedAt": { "type": "string" }
+          "id": {
+            "type": "string"
+          },
+          "receiverName": {
+            "type": "string"
+          },
+          "receiverPhone": {
+            "type": "string"
+          },
+          "countryCode": {
+            "type": "string"
+          },
+          "province": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "detailAddress": {
+            "type": "string"
+          },
+          "isDefault": {
+            "type": "boolean"
+          },
+          "status": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
         }
       },
       "AddCartItemRequest": {
-        "type": "object", "additionalProperties": false, "required": ["skuId", "quantity"],
-        "properties": { "skuId": { "type": "string", "minLength": 1 }, "quantity": { "type": "integer", "minimum": 1 } }
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "skuId",
+          "quantity"
+        ],
+        "properties": {
+          "skuId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "quantity": {
+            "type": "integer",
+            "minimum": 1
+          }
+        }
       },
       "UpdateCartItemRequest": {
-        "type": "object", "additionalProperties": false, "required": ["quantity"],
-        "properties": { "quantity": { "type": "integer", "minimum": 1 } }
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "quantity"
+        ],
+        "properties": {
+          "quantity": {
+            "type": "integer",
+            "minimum": 1
+          }
+        }
       },
       "CreateAddressRequest": {
-        "type": "object", "additionalProperties": false,
-        "required": ["receiverName", "receiverPhone", "countryCode", "province", "city", "detailAddress"],
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "receiverName",
+          "receiverPhone",
+          "countryCode",
+          "province",
+          "city",
+          "detailAddress"
+        ],
         "properties": {
-          "receiverName": { "type": "string", "minLength": 1 }, "receiverPhone": { "type": "string", "minLength": 1 },
-          "countryCode": { "type": "string", "minLength": 2 }, "province": { "type": "string", "minLength": 1 },
-          "city": { "type": "string", "minLength": 1 }, "detailAddress": { "type": "string", "minLength": 1 },
-          "isDefault": { "type": "boolean", "default": false }
+          "receiverName": {
+            "type": "string",
+            "minLength": 1
+          },
+          "receiverPhone": {
+            "type": "string",
+            "minLength": 1
+          },
+          "countryCode": {
+            "type": "string",
+            "minLength": 2
+          },
+          "province": {
+            "type": "string",
+            "minLength": 1
+          },
+          "city": {
+            "type": "string",
+            "minLength": 1
+          },
+          "detailAddress": {
+            "type": "string",
+            "minLength": 1
+          },
+          "isDefault": {
+            "type": "boolean",
+            "default": false
+          }
         }
       },
       "UpdateAddressRequest": {
-        "type": "object", "additionalProperties": false, "minProperties": 1,
+        "type": "object",
+        "additionalProperties": false,
+        "minProperties": 1,
         "properties": {
-          "receiverName": { "type": "string", "minLength": 1 }, "receiverPhone": { "type": "string", "minLength": 1 },
-          "province": { "type": "string", "minLength": 1 }, "city": { "type": "string", "minLength": 1 },
-          "detailAddress": { "type": "string", "minLength": 1 }
+          "receiverName": {
+            "type": "string",
+            "minLength": 1
+          },
+          "receiverPhone": {
+            "type": "string",
+            "minLength": 1
+          },
+          "province": {
+            "type": "string",
+            "minLength": 1
+          },
+          "city": {
+            "type": "string",
+            "minLength": 1
+          },
+          "detailAddress": {
+            "type": "string",
+            "minLength": 1
+          }
         }
       },
-      "CatalogAttributePageData": { "type": "object", "additionalProperties": false, "required": ["items", "pageInfo"], "properties": { "items": { "type": "array", "items": { "$ref": "#/components/schemas/CatalogAttribute" } }, "pageInfo": { "$ref": "#/components/schemas/PageInfo" } } },
-      "CatalogCategoryPageData": { "type": "object", "additionalProperties": false, "required": ["items", "pageInfo"], "properties": { "items": { "type": "array", "items": { "$ref": "#/components/schemas/CatalogCategory" } }, "pageInfo": { "$ref": "#/components/schemas/PageInfo" } } },
-      "CatalogProductPageData": { "type": "object", "additionalProperties": false, "required": ["items", "pageInfo"], "properties": { "items": { "type": "array", "items": { "$ref": "#/components/schemas/CatalogProduct" } }, "pageInfo": { "$ref": "#/components/schemas/PageInfo" } } },
-      "CatalogSkuPageData": { "type": "object", "additionalProperties": false, "required": ["items", "pageInfo"], "properties": { "items": { "type": "array", "items": { "$ref": "#/components/schemas/CatalogSku" } }, "pageInfo": { "$ref": "#/components/schemas/PageInfo" } } },
-      "CartItemPageData": { "type": "object", "additionalProperties": false, "required": ["items", "pageInfo"], "properties": { "items": { "type": "array", "items": { "$ref": "#/components/schemas/CartItem" } }, "pageInfo": { "$ref": "#/components/schemas/PageInfo" } } },
-      "AddressPageData": { "type": "object", "additionalProperties": false, "required": ["items", "pageInfo"], "properties": { "items": { "type": "array", "items": { "$ref": "#/components/schemas/Address" } }, "pageInfo": { "$ref": "#/components/schemas/PageInfo" } } },
-      "CatalogCategoryData": { "type": "object", "additionalProperties": false, "required": ["item"], "properties": { "item": { "$ref": "#/components/schemas/CatalogCategory" } } },
-      "CatalogProductData": { "type": "object", "additionalProperties": false, "required": ["item"], "properties": { "item": { "$ref": "#/components/schemas/CatalogProduct" } } },
-      "CatalogSkuData": { "type": "object", "additionalProperties": false, "required": ["item"], "properties": { "item": { "$ref": "#/components/schemas/CatalogSku" } } },
-      "CartItemData": { "type": "object", "additionalProperties": false, "required": ["item"], "properties": { "item": { "$ref": "#/components/schemas/CartItem" } } },
-      "AddressData": { "type": "object", "additionalProperties": false, "required": ["item"], "properties": { "item": { "$ref": "#/components/schemas/Address" } } },
-      "CatalogAttributeListResponse": { "allOf": [{ "$ref": "#/components/schemas/SdkWorkApiResponse" }, { "type": "object", "required": ["data"], "properties": { "data": { "$ref": "#/components/schemas/CatalogAttributePageData" } } }] },
-      "CatalogCategoryListResponse": { "allOf": [{ "$ref": "#/components/schemas/SdkWorkApiResponse" }, { "type": "object", "required": ["data"], "properties": { "data": { "$ref": "#/components/schemas/CatalogCategoryPageData" } } }] },
-      "CatalogCategoryResponse": { "allOf": [{ "$ref": "#/components/schemas/SdkWorkApiResponse" }, { "type": "object", "required": ["data"], "properties": { "data": { "$ref": "#/components/schemas/CatalogCategoryData" } } }] },
-      "CatalogProductListResponse": { "allOf": [{ "$ref": "#/components/schemas/SdkWorkApiResponse" }, { "type": "object", "required": ["data"], "properties": { "data": { "$ref": "#/components/schemas/CatalogProductPageData" } } }] },
-      "CatalogProductResponse": { "allOf": [{ "$ref": "#/components/schemas/SdkWorkApiResponse" }, { "type": "object", "required": ["data"], "properties": { "data": { "$ref": "#/components/schemas/CatalogProductData" } } }] },
-      "CatalogSkuListResponse": { "allOf": [{ "$ref": "#/components/schemas/SdkWorkApiResponse" }, { "type": "object", "required": ["data"], "properties": { "data": { "$ref": "#/components/schemas/CatalogSkuPageData" } } }] },
-      "CatalogSkuResponse": { "allOf": [{ "$ref": "#/components/schemas/SdkWorkApiResponse" }, { "type": "object", "required": ["data"], "properties": { "data": { "$ref": "#/components/schemas/CatalogSkuData" } } }] },
-      "CartItemListResponse": { "allOf": [{ "$ref": "#/components/schemas/SdkWorkApiResponse" }, { "type": "object", "required": ["data"], "properties": { "data": { "$ref": "#/components/schemas/CartItemPageData" } } }] },
-      "CartItemResponse": { "allOf": [{ "$ref": "#/components/schemas/SdkWorkApiResponse" }, { "type": "object", "required": ["data"], "properties": { "data": { "$ref": "#/components/schemas/CartItemData" } } }] },
-      "AddressListResponse": { "allOf": [{ "$ref": "#/components/schemas/SdkWorkApiResponse" }, { "type": "object", "required": ["data"], "properties": { "data": { "$ref": "#/components/schemas/AddressPageData" } } }] },
-      "AddressResponse": { "allOf": [{ "$ref": "#/components/schemas/SdkWorkApiResponse" }, { "type": "object", "required": ["data"], "properties": { "data": { "$ref": "#/components/schemas/AddressData" } } }] }
+      "CatalogAttributePageData": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "items",
+          "pageInfo"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CatalogAttribute"
+            }
+          },
+          "pageInfo": {
+            "$ref": "#/components/schemas/PageInfo"
+          }
+        }
+      },
+      "CatalogCategoryPageData": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "items",
+          "pageInfo"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CatalogCategory"
+            }
+          },
+          "pageInfo": {
+            "$ref": "#/components/schemas/PageInfo"
+          }
+        }
+      },
+      "CatalogProductPageData": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "items",
+          "pageInfo"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CatalogProduct"
+            }
+          },
+          "pageInfo": {
+            "$ref": "#/components/schemas/PageInfo"
+          }
+        }
+      },
+      "CatalogSkuPageData": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "items",
+          "pageInfo"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CatalogSku"
+            }
+          },
+          "pageInfo": {
+            "$ref": "#/components/schemas/PageInfo"
+          }
+        }
+      },
+      "CartItemPageData": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "items",
+          "pageInfo"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CartItem"
+            }
+          },
+          "pageInfo": {
+            "$ref": "#/components/schemas/PageInfo"
+          }
+        }
+      },
+      "AddressPageData": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "items",
+          "pageInfo"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Address"
+            }
+          },
+          "pageInfo": {
+            "$ref": "#/components/schemas/PageInfo"
+          }
+        }
+      },
+      "CatalogCategoryData": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "item"
+        ],
+        "properties": {
+          "item": {
+            "$ref": "#/components/schemas/CatalogCategory"
+          }
+        }
+      },
+      "CatalogProductData": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "item"
+        ],
+        "properties": {
+          "item": {
+            "$ref": "#/components/schemas/CatalogProduct"
+          }
+        }
+      },
+      "CatalogSkuData": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "item"
+        ],
+        "properties": {
+          "item": {
+            "$ref": "#/components/schemas/CatalogSku"
+          }
+        }
+      },
+      "CartItemData": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "item"
+        ],
+        "properties": {
+          "item": {
+            "$ref": "#/components/schemas/CartItem"
+          }
+        }
+      },
+      "AddressData": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "item"
+        ],
+        "properties": {
+          "item": {
+            "$ref": "#/components/schemas/Address"
+          }
+        }
+      },
+      "CatalogAttributeListResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SdkWorkApiResponse"
+          },
+          {
+            "type": "object",
+            "required": [
+              "data"
+            ],
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/CatalogAttributePageData"
+              }
+            }
+          }
+        ]
+      },
+      "CatalogCategoryListResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SdkWorkApiResponse"
+          },
+          {
+            "type": "object",
+            "required": [
+              "data"
+            ],
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/CatalogCategoryPageData"
+              }
+            }
+          }
+        ]
+      },
+      "CatalogCategoryResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SdkWorkApiResponse"
+          },
+          {
+            "type": "object",
+            "required": [
+              "data"
+            ],
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/CatalogCategoryData"
+              }
+            }
+          }
+        ]
+      },
+      "CatalogProductListResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SdkWorkApiResponse"
+          },
+          {
+            "type": "object",
+            "required": [
+              "data"
+            ],
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/CatalogProductPageData"
+              }
+            }
+          }
+        ]
+      },
+      "CatalogProductResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SdkWorkApiResponse"
+          },
+          {
+            "type": "object",
+            "required": [
+              "data"
+            ],
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/CatalogProductData"
+              }
+            }
+          }
+        ]
+      },
+      "CatalogSkuListResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SdkWorkApiResponse"
+          },
+          {
+            "type": "object",
+            "required": [
+              "data"
+            ],
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/CatalogSkuPageData"
+              }
+            }
+          }
+        ]
+      },
+      "CatalogSkuResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SdkWorkApiResponse"
+          },
+          {
+            "type": "object",
+            "required": [
+              "data"
+            ],
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/CatalogSkuData"
+              }
+            }
+          }
+        ]
+      },
+      "CartItemListResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SdkWorkApiResponse"
+          },
+          {
+            "type": "object",
+            "required": [
+              "data"
+            ],
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/CartItemPageData"
+              }
+            }
+          }
+        ]
+      },
+      "CartItemResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SdkWorkApiResponse"
+          },
+          {
+            "type": "object",
+            "required": [
+              "data"
+            ],
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/CartItemData"
+              }
+            }
+          }
+        ]
+      },
+      "AddressListResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SdkWorkApiResponse"
+          },
+          {
+            "type": "object",
+            "required": [
+              "data"
+            ],
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/AddressPageData"
+              }
+            }
+          }
+        ]
+      },
+      "AddressResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SdkWorkApiResponse"
+          },
+          {
+            "type": "object",
+            "required": [
+              "data"
+            ],
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/AddressData"
+              }
+            }
+          }
+        ]
+      }
     }
   },
-  "security": [{ "AuthToken": [], "AccessToken": [] }]
+  "security": [
+    {
+      "AuthToken": [],
+      "AccessToken": []
+    }
+  ]
 }
