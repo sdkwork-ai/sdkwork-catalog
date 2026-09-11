@@ -70,7 +70,6 @@ Thumbs.db
 **/public/runtime-env.json
 
 # SDK generated server-openapi output (local regeneration product, not committed)
-sdks/**/generated/
 *.js.map
 *.d.ts.map
 # SDK facade transpiled output (build artifacts, not committed)
