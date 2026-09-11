@@ -1,0 +1,1 @@
+{"version":3,"file":"catalog-product-list-response.d.ts","sourceRoot":"","sources":["catalog-product-list-response.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,sBAAsB,EAAE,MAAM,6BAA6B,CAAC;AAE1E,MAAM,WAAW,0BAA0B;IACzC,IAAI,EAAE,CAAC,CAAC;IACR,IAAI,EAAE,OAAO,GAAG,sBAAsB,CAAC;IACvC,OAAO,EAAE,MAAM,CAAC;CACjB"}

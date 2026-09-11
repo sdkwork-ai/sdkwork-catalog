@@ -1,0 +1,1 @@
+{"version":3,"file":"address-page-data.d.ts","sourceRoot":"","sources":["address-page-data.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,OAAO,EAAE,MAAM,WAAW,CAAC;AACzC,OAAO,KAAK,EAAE,QAAQ,EAAE,MAAM,aAAa,CAAC;AAE5C,MAAM,WAAW,eAAe;IAC9B,KAAK,EAAE,OAAO,EAAE,CAAC;IACjB,QAAQ,EAAE,QAAQ,CAAC;CACpB"}

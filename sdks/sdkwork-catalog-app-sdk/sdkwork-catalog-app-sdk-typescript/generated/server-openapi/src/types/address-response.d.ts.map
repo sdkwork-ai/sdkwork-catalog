@@ -1,0 +1,1 @@
+{"version":3,"file":"address-response.d.ts","sourceRoot":"","sources":["address-response.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,WAAW,EAAE,MAAM,gBAAgB,CAAC;AAElD,MAAM,WAAW,eAAe;IAC9B,IAAI,EAAE,CAAC,CAAC;IACR,IAAI,EAAE,OAAO,GAAG,WAAW,CAAC;IAC5B,OAAO,EAAE,MAAM,CAAC;CACjB"}

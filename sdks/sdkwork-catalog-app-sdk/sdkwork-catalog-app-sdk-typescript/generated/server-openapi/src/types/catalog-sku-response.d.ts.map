@@ -1,0 +1,1 @@
+{"version":3,"file":"catalog-sku-response.d.ts","sourceRoot":"","sources":["catalog-sku-response.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,cAAc,EAAE,MAAM,oBAAoB,CAAC;AAEzD,MAAM,WAAW,kBAAkB;IACjC,IAAI,EAAE,CAAC,CAAC;IACR,IAAI,EAAE,OAAO,GAAG,cAAc,CAAC;IAC/B,OAAO,EAAE,MAAM,CAAC;CACjB"}

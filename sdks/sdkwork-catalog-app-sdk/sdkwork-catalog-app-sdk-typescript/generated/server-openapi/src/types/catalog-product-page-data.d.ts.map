@@ -1,0 +1,1 @@
+{"version":3,"file":"catalog-product-page-data.d.ts","sourceRoot":"","sources":["catalog-product-page-data.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,cAAc,EAAE,MAAM,mBAAmB,CAAC;AACxD,OAAO,KAAK,EAAE,QAAQ,EAAE,MAAM,aAAa,CAAC;AAE5C,MAAM,WAAW,sBAAsB;IACrC,KAAK,EAAE,cAAc,EAAE,CAAC;IACxB,QAAQ,EAAE,QAAQ,CAAC;CACpB"}
