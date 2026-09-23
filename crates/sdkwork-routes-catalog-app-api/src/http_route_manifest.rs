@@ -1,6 +1,10 @@
 //! Catalog app-api gateway route manifest (materialized from the authored
 //! OpenAPI contract; business routes are protected by the default framework
 //! profile, so dual-token auth is the manifest default).
+//!
+//! The cart and buyer-address collections are absent because the routes are: those tables were
+//! retired from the merchandise catalog module, and a manifest entry without a route would make the
+//! gateway authorize a path that nothing answers.
 
 use sdkwork_web_core::{HttpMethod, HttpRoute, HttpRouteManifest};
 
@@ -46,60 +50,6 @@ const HTTP_ROUTES: &[HttpRoute] = &[
         "/app/v3/api/catalog/skus/{skuId}",
         "catalog",
         "skus.retrieve",
-    ),
-    HttpRoute::dual_token(
-        HttpMethod::Get,
-        "/app/v3/api/cart/items",
-        "catalog",
-        "items.list",
-    ),
-    HttpRoute::dual_token(
-        HttpMethod::Post,
-        "/app/v3/api/cart/items",
-        "catalog",
-        "items.create",
-    ),
-    HttpRoute::dual_token(
-        HttpMethod::Patch,
-        "/app/v3/api/cart/items/{cartItemId}",
-        "catalog",
-        "items.update",
-    ),
-    HttpRoute::dual_token(
-        HttpMethod::Delete,
-        "/app/v3/api/cart/items/{cartItemId}",
-        "catalog",
-        "items.delete",
-    ),
-    HttpRoute::dual_token(
-        HttpMethod::Get,
-        "/app/v3/api/addresses",
-        "catalog",
-        "addresses.list",
-    ),
-    HttpRoute::dual_token(
-        HttpMethod::Post,
-        "/app/v3/api/addresses",
-        "catalog",
-        "addresses.create",
-    ),
-    HttpRoute::dual_token(
-        HttpMethod::Patch,
-        "/app/v3/api/addresses/{addressId}",
-        "catalog",
-        "addresses.update",
-    ),
-    HttpRoute::dual_token(
-        HttpMethod::Delete,
-        "/app/v3/api/addresses/{addressId}",
-        "catalog",
-        "addresses.delete",
-    ),
-    HttpRoute::dual_token(
-        HttpMethod::Put,
-        "/app/v3/api/addresses/{addressId}/default_selection",
-        "catalog",
-        "addresses.defaultSelection.update",
     ),
 ];
 

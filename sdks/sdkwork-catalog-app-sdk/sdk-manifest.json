@@ -21,7 +21,7 @@
   },
   "sdkOwner": "sdkwork-catalog",
   "apiAuthority": "sdkwork-catalog-app-api",
-  "ownerOnlyOperationCount": 16,
+  "ownerOnlyOperationCount": 7,
   "discoverySurface": {
     "sdkTarget": "app",
     "apiPrefix": "/app/v3/api",

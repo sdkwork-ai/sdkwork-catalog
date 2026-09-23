@@ -13,6 +13,10 @@ workspace = true
 path = "src/lib.rs"
 
 [dependencies]
+dotenvy.workspace = true
+sdkwork-database-config.workspace = true
+sdkwork-database-id.workspace = true
 sdkwork-database-sqlx.workspace = true
-sdkwork-database-spi.workspace = true
-sdkwork_catalog_database_host.workspace = true
+sdkwork-web-bootstrap.workspace = true
+sdkwork-web-core.workspace = true
+tracing.workspace = true

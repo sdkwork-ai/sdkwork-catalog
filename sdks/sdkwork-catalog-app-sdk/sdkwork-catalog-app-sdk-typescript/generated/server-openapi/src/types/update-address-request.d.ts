@@ -1,8 +1,0 @@
-export interface UpdateAddressRequest {
-    receiverName?: string;
-    receiverPhone?: string;
-    province?: string;
-    city?: string;
-    detailAddress?: string;
-}
-//# sourceMappingURL=update-address-request.d.ts.map

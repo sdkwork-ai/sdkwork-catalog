@@ -31,8 +31,10 @@ pub async fn assemble_api_router(host: Arc<CatalogServiceHost>) -> ApiAssembly {
     let DatabasePool::Postgres(pool, _) = host.database_pool() else {
         panic!("catalog app router requires a PostgreSQL database pool");
     };
-    let router =
-        sdkwork_routes_catalog_app_api::build_catalog_app_router_with_postgres_pool(pool.clone());
+    let router = sdkwork_routes_catalog_app_api::build_catalog_app_router_with_postgres_pool(
+        pool.clone(),
+        host.id_generator(),
+    );
     contribution_from(
         router,
         Arc::new(DatabasePoolReadinessCheck::new(
@@ -49,13 +51,21 @@ pub async fn assemble_api_router_from_env() -> Result<ApiAssembly, String> {
 
 /// Assemble the Catalog contribution against a caller-provided database pool so
 /// the platform cloud gateway can share its process-wide PostgreSQL pool.
+///
+/// The identity is acquired from that same pool, so the node lease is held under the authority the
+/// application actually writes to and the router's store mints ids from this process's node id.
 pub async fn assemble_api_router_with_pool(pool: DatabasePool) -> Result<ApiAssembly, String> {
     let postgres = pool
         .as_postgres()
         .ok_or_else(|| "catalog requires a PostgreSQL database pool".to_owned())?
         .clone();
-    let router =
-        sdkwork_routes_catalog_app_api::build_catalog_app_router_with_postgres_pool(postgres);
+    let identity = sdkwork_catalog_service_host::shared_identity(
+        sdkwork_catalog_service_host::CatalogIdentity::from_pool(&pool).await?,
+    );
+    let router = sdkwork_routes_catalog_app_api::build_catalog_app_router_with_postgres_pool(
+        postgres,
+        identity.clone(),
+    );
     contribution_from(router, Arc::new(DatabasePoolReadinessCheck::new(pool)))
 }
 

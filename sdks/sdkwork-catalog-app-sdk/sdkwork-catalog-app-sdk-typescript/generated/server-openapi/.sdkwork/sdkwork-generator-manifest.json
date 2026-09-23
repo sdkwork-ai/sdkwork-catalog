@@ -44,7 +44,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "d8368355940c8a448360caf0c1637a0bbd24f967942de50243dffa4f4b48c10c"
+      "sha256": "0fd48d731f0ef9a7addee5af6cac5074408f552c98ff61cd21c152e05c08633b"
     },
     {
       "path": "sdkwork-sdk.json",
@@ -55,20 +55,12 @@
       "sha256": "94d136c54a008dfe7602e373a0b2c79176bbf2fc6e7c899fc23b1f12f750380f"
     },
     {
-      "path": "src/api/cart.ts",
-      "sha256": "9f23340cb80a4dcfa746ff7c9e3c257d5136d44f70c2eb8c78dc5245da673243"
-    },
-    {
       "path": "src/api/catalog.ts",
       "sha256": "4a0a6f2dd1a5875c4d99431f712b7db10098fb7c7f50d6f4cf63edf1cd6b9daf"
     },
     {
-      "path": "src/api/delivery.ts",
-      "sha256": "927b1e7af8784abe24808615b51750cecfd1260d5acd34e956b1298df7e55a2c"
-    },
-    {
       "path": "src/api/index.ts",
-      "sha256": "9a9b48ce04f0a886da172a2865bf7a4ab63d45794818443c96b1665eedf464d3"
+      "sha256": "5bde10fb1b583b1745639d201a747e4ac8a9541eff5073ae49ec179cfdefa0ab"
     },
     {
       "path": "src/api/paths.ts",
@@ -80,7 +72,7 @@
     },
     {
       "path": "src/http/client.ts",
-      "sha256": "868b7785497a93658b628de2d9b520d9d2456406bcf2ef717319beaa6913146d"
+      "sha256": "f0e93f51af678aadaf96d3e4b26e2224cb5f551b3f4651980630bbe1c7f1ceac"
     },
     {
       "path": "src/http/index.ts",
@@ -92,51 +84,7 @@
     },
     {
       "path": "src/sdk.ts",
-      "sha256": "53e93cf32898c9dec2a89af458cb5e62abbeeccec47ccc55a681826a48c92a4b"
-    },
-    {
-      "path": "src/types/add-cart-item-request.ts",
-      "sha256": "6b7ef86582f66a3c2ccc61fb0c98e501df25ffcf551ea8e0b6bda80232611190"
-    },
-    {
-      "path": "src/types/address-data.ts",
-      "sha256": "a391d970963d05bdfe482fa053babd0e0671e916f5d0ed0a9f21792d2e3aadce"
-    },
-    {
-      "path": "src/types/address-list-response.ts",
-      "sha256": "25218eef7adc0d3ba093bd929bc92401f5a390d67576efac138bb303de689f8a"
-    },
-    {
-      "path": "src/types/address-page-data.ts",
-      "sha256": "049c21050069e326b9b2b18d98ae1232b504720fe8ecdc1ff37070ace6fc9a7b"
-    },
-    {
-      "path": "src/types/address-response.ts",
-      "sha256": "db4daac362739c07bf1cac499caba7655a74c329d6676b6c9b835df9996b88c5"
-    },
-    {
-      "path": "src/types/address.ts",
-      "sha256": "ea141426932a5db249f5977781259a076848ab67542b5e6b988c62043d41827e"
-    },
-    {
-      "path": "src/types/cart-item-data.ts",
-      "sha256": "cda340dcdbd17e9101912ebcf69c2a6456e3b580cff2f34671f538ae9a12a2e7"
-    },
-    {
-      "path": "src/types/cart-item-list-response.ts",
-      "sha256": "98feaea63e84fefdb32a3797b4480150520a033ba439f31396d99b76b94dbaf8"
-    },
-    {
-      "path": "src/types/cart-item-page-data.ts",
-      "sha256": "9036370dccfe996cce3969a3e8eaf8f9626cab86d9bdf06a8f56408d4adbcc97"
-    },
-    {
-      "path": "src/types/cart-item-response.ts",
-      "sha256": "07738c6a9afab12343417c31961b5d37e4ce26055a55ef37bb9106ce3aa24734"
-    },
-    {
-      "path": "src/types/cart-item.ts",
-      "sha256": "387fd58d678db03b098d1ad879725ecb9e9cfdae0f37894fa37ea52231844dfd"
+      "sha256": "e52c28f3dd3fea53b3294070faa09c76cefdb6ef64de77fd1352d8aa59dca14e"
     },
     {
       "path": "src/types/catalog-attribute-list-response.ts",
@@ -148,7 +96,7 @@
     },
     {
       "path": "src/types/catalog-attribute.ts",
-      "sha256": "e26f4f26682997004574b79b508f8e0cedd83f175ab1cda8c09bebc685f2304e"
+      "sha256": "0ef9432d1af435f5484241137384ad3892368a9e1c5c24b4043ac6b157fbef42"
     },
     {
       "path": "src/types/catalog-category-data.ts",
@@ -168,7 +116,7 @@
     },
     {
       "path": "src/types/catalog-category.ts",
-      "sha256": "35d0f0df0a1c134a0b76125f708be8cebbbb5fd5f532fe449ac78c45fe0f9bd5"
+      "sha256": "eb992bb3878ad4bc209a429d15cbeb4d4bd635e3404b52bad75f4ffe036658fe"
     },
     {
       "path": "src/types/catalog-product-data.ts",
@@ -188,7 +136,7 @@
     },
     {
       "path": "src/types/catalog-product.ts",
-      "sha256": "818be8ac5d88eee53ebf74013d75c91601a0b0903b33c34d3f4f898b3b822513"
+      "sha256": "00f0b5a7f534baae4fcb57e1a35b806789011bc705339543de9957037c895fff"
     },
     {
       "path": "src/types/catalog-sku-data.ts",
@@ -208,19 +156,15 @@
     },
     {
       "path": "src/types/catalog-sku.ts",
-      "sha256": "6c03165f2ac739d31ab87ffc3981bed086909ccd509ffbf680dbf05b1e351f00"
+      "sha256": "88c232ef464bba083e09fff468f30daa1ea793031a9eb43b5b119ca74efaf930"
     },
     {
       "path": "src/types/common.ts",
       "sha256": "d2506be8c4bdbe8e7059393467e6e71d75ef1d8c018dbf997bb0ab2a77b6c7b6"
     },
     {
-      "path": "src/types/create-address-request.ts",
-      "sha256": "71d501a96583c120fcde45a4b6c8b4348c6c4e91e118fdefa96efe01927d88b7"
-    },
-    {
       "path": "src/types/index.ts",
-      "sha256": "d3f258491e58fe82d9ed31bb8a0e8e1bd7dbe6589fc400f4772576d1854c5089"
+      "sha256": "95780059d8a9fc084c63e3c9d2370600eedb2120529438cb1e8096bae402de2d"
     },
     {
       "path": "src/types/page-info.ts",
@@ -233,14 +177,6 @@
     {
       "path": "src/types/sdk-work-api-response.ts",
       "sha256": "b0e8a26047d6002f67c43b0accaebb34d4d7a4d6ba8f77c55ed9bd0a9036cc77"
-    },
-    {
-      "path": "src/types/update-address-request.ts",
-      "sha256": "75617949980837440775534c43548724404bd492032f5b76ec70435aa0dfdcd1"
-    },
-    {
-      "path": "src/types/update-cart-item-request.ts",
-      "sha256": "cddfd1a58cc8a30c091c7902627a63a58b839e71fa355d82dc822a2cc732dd1a"
     },
     {
       "path": "tsconfig.json",

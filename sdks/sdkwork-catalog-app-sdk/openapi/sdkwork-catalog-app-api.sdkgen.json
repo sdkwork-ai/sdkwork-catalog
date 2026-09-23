@@ -3,7 +3,7 @@
   "info": {
     "title": "SDKWork Catalog App API",
     "version": "1.0.0",
-    "description": "Typed app API for active catalog browsing, cart management, and user delivery addresses.",
+    "description": "Typed app API for browsing the active catalog: categories, attributes, products, and the SKUs of each product.",
     "x-sdkwork-api-authority": "sdkwork-catalog-app-api",
     "x-sdkwork-sdk-family": "sdkwork-catalog-app-sdk",
     "x-sdkwork-owner": "sdkwork-catalog"
@@ -17,14 +17,6 @@
     {
       "name": "catalog",
       "description": "Active product catalog resources."
-    },
-    {
-      "name": "cart",
-      "description": "Authenticated user's cart resources."
-    },
-    {
-      "name": "delivery",
-      "description": "Authenticated user's delivery addresses."
     }
   ],
   "paths": {
@@ -602,686 +594,6 @@
           }
         ]
       }
-    },
-    "/app/v3/api/cart/items": {
-      "get": {
-        "tags": [
-          "cart"
-        ],
-        "summary": "List the authenticated user's cart items.",
-        "operationId": "items.list",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/Page"
-          },
-          {
-            "$ref": "#/components/parameters/PageSize"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Cart item page.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CartItemListResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request.",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetail"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Authentication required.",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetail"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal server error.",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetail"
-                }
-              }
-            }
-          }
-        },
-        "x-sdkwork-owner": "sdkwork-catalog",
-        "x-sdkwork-api-authority": "sdkwork-catalog-app-api",
-        "x-sdkwork-domain": "commerce",
-        "x-sdkwork-resource": "cart.items",
-        "x-sdkwork-request-context": "WebRequestContext",
-        "x-sdkwork-api-surface": "app-api",
-        "x-sdkwork-pagination-mode": "offset",
-        "security": [
-          {
-            "AuthToken": [],
-            "AccessToken": []
-          }
-        ]
-      },
-      "post": {
-        "tags": [
-          "cart"
-        ],
-        "summary": "Add an item to the authenticated user's cart.",
-        "operationId": "items.create",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AddCartItemRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Cart item.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CartItemResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request.",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetail"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Authentication required.",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetail"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal server error.",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetail"
-                }
-              }
-            }
-          }
-        },
-        "x-sdkwork-owner": "sdkwork-catalog",
-        "x-sdkwork-api-authority": "sdkwork-catalog-app-api",
-        "x-sdkwork-domain": "commerce",
-        "x-sdkwork-resource": "cart.items",
-        "x-sdkwork-request-context": "WebRequestContext",
-        "x-sdkwork-api-surface": "app-api",
-        "parameters": [],
-        "security": [
-          {
-            "AuthToken": [],
-            "AccessToken": []
-          }
-        ]
-      }
-    },
-    "/app/v3/api/cart/items/{cartItemId}": {
-      "patch": {
-        "tags": [
-          "cart"
-        ],
-        "summary": "Update a cart item quantity.",
-        "operationId": "items.update",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/CartItemId"
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateCartItemRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Cart item.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CartItemResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request.",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetail"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Authentication required.",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetail"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Resource not found.",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetail"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal server error.",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetail"
-                }
-              }
-            }
-          }
-        },
-        "x-sdkwork-owner": "sdkwork-catalog",
-        "x-sdkwork-api-authority": "sdkwork-catalog-app-api",
-        "x-sdkwork-domain": "commerce",
-        "x-sdkwork-resource": "cart.items",
-        "x-sdkwork-request-context": "WebRequestContext",
-        "x-sdkwork-api-surface": "app-api",
-        "security": [
-          {
-            "AuthToken": [],
-            "AccessToken": []
-          }
-        ]
-      },
-      "delete": {
-        "tags": [
-          "cart"
-        ],
-        "summary": "Delete a cart item.",
-        "operationId": "items.delete",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/CartItemId"
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Cart item deleted."
-          },
-          "400": {
-            "description": "Invalid request.",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetail"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Authentication required.",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetail"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Resource not found.",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetail"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal server error.",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetail"
-                }
-              }
-            }
-          }
-        },
-        "x-sdkwork-owner": "sdkwork-catalog",
-        "x-sdkwork-api-authority": "sdkwork-catalog-app-api",
-        "x-sdkwork-domain": "commerce",
-        "x-sdkwork-resource": "cart.items",
-        "x-sdkwork-request-context": "WebRequestContext",
-        "x-sdkwork-api-surface": "app-api",
-        "security": [
-          {
-            "AuthToken": [],
-            "AccessToken": []
-          }
-        ]
-      }
-    },
-    "/app/v3/api/addresses": {
-      "get": {
-        "tags": [
-          "delivery"
-        ],
-        "summary": "List the authenticated user's delivery addresses.",
-        "operationId": "addresses.list",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/Page"
-          },
-          {
-            "$ref": "#/components/parameters/PageSize"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Address page.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AddressListResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request.",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetail"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Authentication required.",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetail"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal server error.",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetail"
-                }
-              }
-            }
-          }
-        },
-        "x-sdkwork-owner": "sdkwork-catalog",
-        "x-sdkwork-api-authority": "sdkwork-catalog-app-api",
-        "x-sdkwork-domain": "commerce",
-        "x-sdkwork-resource": "addresses",
-        "x-sdkwork-request-context": "WebRequestContext",
-        "x-sdkwork-api-surface": "app-api",
-        "x-sdkwork-pagination-mode": "offset",
-        "security": [
-          {
-            "AuthToken": [],
-            "AccessToken": []
-          }
-        ]
-      },
-      "post": {
-        "tags": [
-          "delivery"
-        ],
-        "summary": "Create a delivery address.",
-        "operationId": "addresses.create",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateAddressRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Address.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AddressResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request.",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetail"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Authentication required.",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetail"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal server error.",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetail"
-                }
-              }
-            }
-          }
-        },
-        "x-sdkwork-owner": "sdkwork-catalog",
-        "x-sdkwork-api-authority": "sdkwork-catalog-app-api",
-        "x-sdkwork-domain": "commerce",
-        "x-sdkwork-resource": "addresses",
-        "x-sdkwork-request-context": "WebRequestContext",
-        "x-sdkwork-api-surface": "app-api",
-        "parameters": [],
-        "security": [
-          {
-            "AuthToken": [],
-            "AccessToken": []
-          }
-        ]
-      }
-    },
-    "/app/v3/api/addresses/{addressId}": {
-      "patch": {
-        "tags": [
-          "delivery"
-        ],
-        "summary": "Update a delivery address.",
-        "operationId": "addresses.update",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/AddressId"
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateAddressRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Address.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AddressResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request.",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetail"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Authentication required.",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetail"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Resource not found.",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetail"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal server error.",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetail"
-                }
-              }
-            }
-          }
-        },
-        "x-sdkwork-owner": "sdkwork-catalog",
-        "x-sdkwork-api-authority": "sdkwork-catalog-app-api",
-        "x-sdkwork-domain": "commerce",
-        "x-sdkwork-resource": "addresses",
-        "x-sdkwork-request-context": "WebRequestContext",
-        "x-sdkwork-api-surface": "app-api",
-        "security": [
-          {
-            "AuthToken": [],
-            "AccessToken": []
-          }
-        ]
-      },
-      "delete": {
-        "tags": [
-          "delivery"
-        ],
-        "summary": "Delete a delivery address.",
-        "operationId": "addresses.delete",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/AddressId"
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Address deleted."
-          },
-          "400": {
-            "description": "Invalid request.",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetail"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Authentication required.",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetail"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Resource not found.",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetail"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal server error.",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetail"
-                }
-              }
-            }
-          }
-        },
-        "x-sdkwork-owner": "sdkwork-catalog",
-        "x-sdkwork-api-authority": "sdkwork-catalog-app-api",
-        "x-sdkwork-domain": "commerce",
-        "x-sdkwork-resource": "addresses",
-        "x-sdkwork-request-context": "WebRequestContext",
-        "x-sdkwork-api-surface": "app-api",
-        "security": [
-          {
-            "AuthToken": [],
-            "AccessToken": []
-          }
-        ]
-      }
-    },
-    "/app/v3/api/addresses/{addressId}/default_selection": {
-      "put": {
-        "tags": [
-          "delivery"
-        ],
-        "summary": "Set the default delivery address.",
-        "operationId": "addresses.defaultSelection.update",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/AddressId"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Address.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AddressResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request.",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetail"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Authentication required.",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetail"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Resource not found.",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetail"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal server error.",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetail"
-                }
-              }
-            }
-          }
-        },
-        "x-sdkwork-owner": "sdkwork-catalog",
-        "x-sdkwork-api-authority": "sdkwork-catalog-app-api",
-        "x-sdkwork-domain": "commerce",
-        "x-sdkwork-resource": "addresses.defaultSelection",
-        "x-sdkwork-request-context": "WebRequestContext",
-        "x-sdkwork-api-surface": "app-api",
-        "security": [
-          {
-            "AuthToken": [],
-            "AccessToken": []
-          }
-        ]
-      }
     }
   },
   "components": {
@@ -1337,22 +649,6 @@
       },
       "SkuId": {
         "name": "skuId",
-        "in": "path",
-        "required": true,
-        "schema": {
-          "type": "string"
-        }
-      },
-      "CartItemId": {
-        "name": "cartItemId",
-        "in": "path",
-        "required": true,
-        "schema": {
-          "type": "string"
-        }
-      },
-      "AddressId": {
-        "name": "addressId",
         "in": "path",
         "required": true,
         "schema": {
@@ -1427,46 +723,6 @@
           "application/json": {
             "schema": {
               "$ref": "#/components/schemas/CatalogSkuResponse"
-            }
-          }
-        }
-      },
-      "CartItemListSuccess": {
-        "description": "Cart item page.",
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/CartItemListResponse"
-            }
-          }
-        }
-      },
-      "CartItemSuccess": {
-        "description": "Cart item.",
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/CartItemResponse"
-            }
-          }
-        }
-      },
-      "AddressListSuccess": {
-        "description": "Address page.",
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/AddressListResponse"
-            }
-          }
-        }
-      },
-      "AddressSuccess": {
-        "description": "Address.",
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/AddressResponse"
             }
           }
         }
@@ -1619,41 +875,73 @@
           "attributeNo",
           "name",
           "valueType",
-          "scope",
           "status",
           "sortOrder",
           "createdAt",
+          "version",
           "updatedAt"
         ],
         "properties": {
           "id": {
-            "type": "string"
+            "type": "string",
+            "format": "int64",
+            "pattern": "^-?[0-9]+$",
+            "x-sdkwork-int64-string": true,
+            "x-sdkwork-rust-type": "i64",
+            "description": "Primary key."
           },
           "attributeNo": {
-            "type": "string"
+            "type": "string",
+            "description": "Stable business key of the attribute, unique per tenant while the row is live."
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "Default-locale name. Bounded by ck_commerce_product_attribute_name_length."
           },
           "valueType": {
-            "type": "string"
-          },
-          "scope": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "enum",
+              "text",
+              "number",
+              "bool",
+              "date"
+            ],
+            "description": "Declared value type. ck_commerce_product_attribute_value_type is the authority for this set."
           },
           "status": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "active",
+              "inactive"
+            ],
+            "description": "Shared lifecycle vocabulary. The authority for this set is the column CHECK constraint named in the field description."
           },
           "sortOrder": {
             "type": "string",
             "format": "int64",
-            "x-sdkwork-int64-string": true
+            "pattern": "^-?[0-9]+$",
+            "x-sdkwork-int64-string": true,
+            "x-sdkwork-rust-type": "i64",
+            "description": "Sibling ordering key, ascending."
           },
           "createdAt": {
-            "type": "string"
+            "type": "string",
+            "format": "date-time",
+            "description": "Row creation time."
           },
           "updatedAt": {
-            "type": "string"
+            "type": "string",
+            "format": "date-time",
+            "description": "Last write time."
+          },
+          "version": {
+            "type": "string",
+            "format": "int64",
+            "pattern": "^-?[0-9]+$",
+            "x-sdkwork-int64-string": true,
+            "x-sdkwork-rust-type": "i64",
+            "description": "Row version, advanced by every write to this row and by any write that rewrites the row's own storage identity (a category move also advances the moved subtree). It is the value an update or delete must send back as `If-Match`, and the same number the response's `ETag` carries, so a client that has read a resource can always name the version it read. `API_SPEC` section 17 keeps the version source, the required header, and the two result codes together: a missing `If-Match` answers `42801`, a stale one answers `41201`."
           }
         }
       },
@@ -1664,50 +952,92 @@
           "id",
           "categoryNo",
           "path",
-          "levelNo",
+          "depth",
+          "isLeaf",
           "name",
           "sortOrder",
           "status",
           "createdAt",
+          "version",
           "updatedAt"
         ],
         "properties": {
           "id": {
-            "type": "string"
+            "type": "string",
+            "format": "int64",
+            "pattern": "^-?[0-9]+$",
+            "x-sdkwork-int64-string": true,
+            "x-sdkwork-rust-type": "i64",
+            "description": "Primary key, minted by the service host before INSERT."
           },
           "categoryNo": {
-            "type": "string"
+            "type": "string",
+            "description": "Stable business key of the category, unique per tenant while the row is live."
           },
           "parentId": {
             "type": [
               "string",
               "null"
-            ]
+            ],
+            "format": "int64",
+            "pattern": "^-?[0-9]+$",
+            "x-sdkwork-int64-string": true,
+            "x-sdkwork-rust-type": "i64",
+            "description": "Parent category id. Null for a root category; never equal to `id` (ck_commerce_product_category_self_parent)."
           },
           "path": {
-            "type": "string"
+            "type": "string",
+            "description": "Materialised ancestor path. Matches ck_commerce_product_category_path_shape."
           },
-          "levelNo": {
+          "depth": {
             "type": "string",
             "format": "int64",
-            "x-sdkwork-int64-string": true
+            "pattern": "^[0-9]+$",
+            "x-sdkwork-int64-string": true,
+            "x-sdkwork-rust-type": "i64",
+            "description": "Zero-based depth in the tree. `depth >= 0` per ck_commerce_product_category_depth."
+          },
+          "isLeaf": {
+            "type": "boolean",
+            "description": "True when the category has no live children."
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "Default-locale name. Bounded by ck_commerce_product_category_name_length."
           },
           "sortOrder": {
             "type": "string",
             "format": "int64",
-            "x-sdkwork-int64-string": true
+            "pattern": "^-?[0-9]+$",
+            "x-sdkwork-int64-string": true,
+            "x-sdkwork-rust-type": "i64",
+            "description": "Sibling ordering key, ascending."
           },
           "status": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "active",
+              "inactive"
+            ],
+            "description": "Shared lifecycle vocabulary. The authority for this set is the column CHECK constraint named in the field description."
           },
           "createdAt": {
-            "type": "string"
+            "type": "string",
+            "format": "date-time",
+            "description": "Row creation time."
           },
           "updatedAt": {
-            "type": "string"
+            "type": "string",
+            "format": "date-time",
+            "description": "Last write time."
+          },
+          "version": {
+            "type": "string",
+            "format": "int64",
+            "pattern": "^-?[0-9]+$",
+            "x-sdkwork-int64-string": true,
+            "x-sdkwork-rust-type": "i64",
+            "description": "Row version, advanced by every write to this row and by any write that rewrites the row's own storage identity (a category move also advances the moved subtree). It is the value an update or delete must send back as `If-Match`, and the same number the response's `ETag` carries, so a client that has read a resource can always name the version it read. `API_SPEC` section 17 keeps the version source, the required header, and the two result codes together: a missing `If-Match` answers `42801`, a stale one answers `41201`."
           }
         }
       },
@@ -1716,62 +1046,116 @@
         "additionalProperties": false,
         "required": [
           "id",
-          "spuNo",
-          "title",
+          "productNo",
+          "categoryId",
+          "name",
           "productType",
           "status",
-          "visibleSurfaces",
+          "salesStatus",
           "createdAt",
+          "version",
           "updatedAt"
         ],
         "properties": {
           "id": {
-            "type": "string"
+            "type": "string",
+            "format": "int64",
+            "pattern": "^-?[0-9]+$",
+            "x-sdkwork-int64-string": true,
+            "x-sdkwork-rust-type": "i64",
+            "description": "Primary key."
           },
-          "spuNo": {
-            "type": "string"
+          "productNo": {
+            "type": "string",
+            "description": "Stable business key of the product, unique per tenant while the row is live."
+          },
+          "categoryId": {
+            "type": "string",
+            "format": "int64",
+            "pattern": "^-?[0-9]+$",
+            "x-sdkwork-int64-string": true,
+            "x-sdkwork-rust-type": "i64",
+            "description": "Owning category id."
+          },
+          "name": {
+            "type": "string",
+            "description": "Default-locale name. Bounded by ck_commerce_product_spu_name_length."
           },
           "title": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Default-locale marketing title."
           },
           "subtitle": {
             "type": [
               "string",
               "null"
-            ]
+            ],
+            "description": "Default-locale marketing subtitle."
           },
           "description": {
             "type": [
               "string",
               "null"
-            ]
+            ],
+            "description": "Default-locale long description."
           },
           "productType": {
-            "type": "string"
-          },
-          "categoryId": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": "string",
+            "enum": [
+              "physical",
+              "digital",
+              "service",
+              "membership",
+              "points"
+            ],
+            "description": "How the product is fulfilled. ck_commerce_product_spu_product_type is the authority for this set."
           },
           "status": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "draft",
+              "active",
+              "inactive",
+              "archived"
+            ],
+            "description": "Lifecycle status. ck_commerce_product_spu_status is the authority for this set."
+          },
+          "salesStatus": {
+            "type": "string",
+            "enum": [
+              "active",
+              "inactive"
+            ],
+            "description": "Whether the product may be sold. ck_commerce_product_spu_sales_status is the authority; `active` requires a non-draft status (ck_commerce_product_spu_sales_requires_published)."
           },
           "publishedAt": {
             "type": [
               "string",
               "null"
-            ]
-          },
-          "visibleSurfaces": {
-            "type": "string"
+            ],
+            "format": "date-time",
+            "description": "First publish time. Null until the product leaves draft (ck_commerce_product_spu_published_at)."
           },
           "createdAt": {
-            "type": "string"
+            "type": "string",
+            "format": "date-time",
+            "description": "Row creation time."
           },
           "updatedAt": {
-            "type": "string"
+            "type": "string",
+            "format": "date-time",
+            "description": "Last write time."
+          },
+          "version": {
+            "type": "string",
+            "format": "int64",
+            "pattern": "^-?[0-9]+$",
+            "x-sdkwork-int64-string": true,
+            "x-sdkwork-rust-type": "i64",
+            "description": "Row version, advanced by every write to this row and by any write that rewrites the row's own storage identity (a category move also advances the moved subtree). It is the value an update or delete must send back as `If-Match`, and the same number the response's `ETag` carries, so a client that has read a resource can always name the version it read. `API_SPEC` section 17 keeps the version source, the required header, and the two result codes together: a missing `If-Match` answers `42801`, a stale one answers `41201`."
           }
         }
       },
@@ -1780,257 +1164,201 @@
         "additionalProperties": false,
         "required": [
           "id",
-          "spuId",
+          "productId",
           "skuNo",
-          "name",
-          "title",
-          "priceAmount",
+          "variantSignature",
           "currencyCode",
+          "minorUnitExponent",
+          "salePriceMinor",
           "fulfillmentType",
           "inventoryTracking",
           "status",
+          "salesStatus",
           "createdAt",
-          "updatedAt"
+          "version",
+          "updatedAt",
+          "attributeValues"
         ],
         "properties": {
           "id": {
-            "type": "string"
+            "type": "string",
+            "format": "int64",
+            "pattern": "^-?[0-9]+$",
+            "x-sdkwork-int64-string": true,
+            "x-sdkwork-rust-type": "i64",
+            "description": "Primary key."
           },
-          "spuId": {
-            "type": "string"
+          "productId": {
+            "type": "string",
+            "format": "int64",
+            "pattern": "^-?[0-9]+$",
+            "x-sdkwork-int64-string": true,
+            "x-sdkwork-rust-type": "i64",
+            "description": "Owning product id."
           },
           "skuNo": {
-            "type": "string"
+            "type": "string",
+            "description": "Stable business key of the SKU, unique per tenant while the row is live."
+          },
+          "variantSignature": {
+            "type": "string",
+            "description": "Deterministic signature of the attribute values that define this variant. Bounded by ck_commerce_product_sku_variant_signature."
           },
           "name": {
-            "type": "string"
-          },
-          "title": {
-            "type": "string"
-          },
-          "priceAmount": {
-            "type": "string",
-            "pattern": "^-?[0-9]+(\\.[0-9]+)?$"
-          },
-          "originalPriceAmount": {
             "type": [
               "string",
               "null"
-            ]
+            ],
+            "description": "Default-locale SKU name."
+          },
+          "title": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Default-locale SKU title."
           },
           "currencyCode": {
             "type": "string",
-            "pattern": "^[A-Z]{3}$"
+            "pattern": "^[A-Z0-9]{3,8}$",
+            "description": "ISO 4217 code every amount on this row is stated in."
+          },
+          "minorUnitExponent": {
+            "type": "string",
+            "format": "int64",
+            "pattern": "^[0-9]+$",
+            "x-sdkwork-int64-string": true,
+            "x-sdkwork-rust-type": "i64",
+            "description": "Minor-unit exponent of `currencyCode`, snapshotted from commerce_currency at write time. This is a unit exponent, not an amount: naming it `priceScale` reads as money to the API_SPEC section 13.2 validator, while the storage column keeps its own `price_scale` name. `price_scale BETWEEN 0 AND 8` per ck_commerce_product_sku_price_scale."
+          },
+          "salePriceMinor": {
+            "type": "string",
+            "format": "int64",
+            "pattern": "^[0-9]+$",
+            "x-sdkwork-int64-string": true,
+            "x-sdkwork-rust-type": "i64",
+            "description": "Price actually charged, in the currency minor unit. Never negative (ck_commerce_product_sku_sale_price) and never above listPriceMinor (ck_commerce_product_sku_sale_not_above_list).",
+            "x-sdkwork-money-unit": "minor"
+          },
+          "listPriceMinor": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "int64",
+            "pattern": "^[0-9]+$",
+            "x-sdkwork-int64-string": true,
+            "x-sdkwork-rust-type": "i64",
+            "x-sdkwork-money-unit": "minor",
+            "description": "Reference price for the strike-through figure, in the same minor unit. Null means \"not declared\"."
           },
           "fulfillmentType": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "physical",
+              "digital",
+              "service",
+              "membership_activation",
+              "points_topup"
+            ],
+            "description": "How one unit reaches the buyer. ck_commerce_product_sku_fulfillment_type is the authority for this set."
           },
           "inventoryTracking": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "none",
+              "quantity"
+            ],
+            "description": "Whether stock is tracked. ck_commerce_product_sku_inventory_tracking is the authority for this set. The stock itself is owned by sdkwork-inventory."
           },
           "status": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "draft",
+              "active",
+              "inactive",
+              "archived"
+            ],
+            "description": "Lifecycle status. ck_commerce_product_sku_status is the authority for this set."
+          },
+          "salesStatus": {
+            "type": "string",
+            "enum": [
+              "active",
+              "inactive"
+            ],
+            "description": "Whether the SKU may be sold. `active` requires an active status (ck_commerce_product_sku_sales_requires_active)."
           },
           "publishedAt": {
             "type": [
               "string",
               "null"
-            ]
-          },
-          "specJson": {
-            "type": [
-              "string",
-              "null"
-            ]
+            ],
+            "format": "date-time",
+            "description": "First publish time. Null until the SKU leaves draft (ck_commerce_product_sku_published_at)."
           },
           "createdAt": {
-            "type": "string"
+            "type": "string",
+            "format": "date-time",
+            "description": "Row creation time."
           },
           "updatedAt": {
-            "type": "string"
-          }
-        }
-      },
-      "CartItem": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "id",
-          "skuId",
-          "quantity",
-          "createdAt",
-          "updatedAt"
-        ],
-        "properties": {
-          "id": {
-            "type": "string"
+            "type": "string",
+            "format": "date-time",
+            "description": "Last write time."
           },
-          "skuId": {
-            "type": "string"
+          "attributeValues": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "attributeId",
+                "attributeValueId",
+                "attributeNo",
+                "valueCode",
+                "displayValue"
+              ],
+              "properties": {
+                "attributeId": {
+                  "type": "string",
+                  "format": "int64",
+                  "pattern": "^-?[0-9]+$",
+                  "x-sdkwork-int64-string": true,
+                  "x-sdkwork-rust-type": "i64",
+                  "description": "Dictionary attribute the axis belongs to."
+                },
+                "attributeValueId": {
+                  "type": "string",
+                  "format": "int64",
+                  "pattern": "^-?[0-9]+$",
+                  "x-sdkwork-int64-string": true,
+                  "x-sdkwork-rust-type": "i64",
+                  "description": "Dictionary value this SKU occupies on the axis."
+                },
+                "attributeNo": {
+                  "type": "string",
+                  "description": "Stable business key of the attribute."
+                },
+                "valueCode": {
+                  "type": "string",
+                  "description": "Stable business key of the value."
+                },
+                "displayValue": {
+                  "type": "string",
+                  "description": "Default-locale label of the value."
+                }
+              }
+            },
+            "description": "The SKU positions on its product category sales axes. Always present, empty when the category declares no sales axis: it is a list rather than a nullable field so \"no axes\" and \"axes not loaded\" cannot look the same. `variantSignature` carries the same information as one string; these rows are what a variant matrix is rendered from."
           },
-          "quantity": {
+          "version": {
             "type": "string",
             "format": "int64",
-            "minimum": 1,
-            "x-sdkwork-int64-string": true
-          },
-          "createdAt": {
-            "type": "string"
-          },
-          "updatedAt": {
-            "type": "string"
-          }
-        }
-      },
-      "Address": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "id",
-          "receiverName",
-          "receiverPhone",
-          "countryCode",
-          "province",
-          "city",
-          "detailAddress",
-          "isDefault",
-          "status",
-          "createdAt",
-          "updatedAt"
-        ],
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "receiverName": {
-            "type": "string"
-          },
-          "receiverPhone": {
-            "type": "string"
-          },
-          "countryCode": {
-            "type": "string"
-          },
-          "province": {
-            "type": "string"
-          },
-          "city": {
-            "type": "string"
-          },
-          "detailAddress": {
-            "type": "string"
-          },
-          "isDefault": {
-            "type": "boolean"
-          },
-          "status": {
-            "type": "string"
-          },
-          "createdAt": {
-            "type": "string"
-          },
-          "updatedAt": {
-            "type": "string"
-          }
-        }
-      },
-      "AddCartItemRequest": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "skuId",
-          "quantity"
-        ],
-        "properties": {
-          "skuId": {
-            "type": "string",
-            "minLength": 1
-          },
-          "quantity": {
-            "type": "integer",
-            "minimum": 1
-          }
-        }
-      },
-      "UpdateCartItemRequest": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "quantity"
-        ],
-        "properties": {
-          "quantity": {
-            "type": "integer",
-            "minimum": 1
-          }
-        }
-      },
-      "CreateAddressRequest": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "receiverName",
-          "receiverPhone",
-          "countryCode",
-          "province",
-          "city",
-          "detailAddress"
-        ],
-        "properties": {
-          "receiverName": {
-            "type": "string",
-            "minLength": 1
-          },
-          "receiverPhone": {
-            "type": "string",
-            "minLength": 1
-          },
-          "countryCode": {
-            "type": "string",
-            "minLength": 2
-          },
-          "province": {
-            "type": "string",
-            "minLength": 1
-          },
-          "city": {
-            "type": "string",
-            "minLength": 1
-          },
-          "detailAddress": {
-            "type": "string",
-            "minLength": 1
-          },
-          "isDefault": {
-            "type": "boolean",
-            "default": false
-          }
-        }
-      },
-      "UpdateAddressRequest": {
-        "type": "object",
-        "additionalProperties": false,
-        "minProperties": 1,
-        "properties": {
-          "receiverName": {
-            "type": "string",
-            "minLength": 1
-          },
-          "receiverPhone": {
-            "type": "string",
-            "minLength": 1
-          },
-          "province": {
-            "type": "string",
-            "minLength": 1
-          },
-          "city": {
-            "type": "string",
-            "minLength": 1
-          },
-          "detailAddress": {
-            "type": "string",
-            "minLength": 1
+            "pattern": "^-?[0-9]+$",
+            "x-sdkwork-int64-string": true,
+            "x-sdkwork-rust-type": "i64",
+            "description": "Row version, advanced by every write to this row and by any write that rewrites the row's own storage identity (a category move also advances the moved subtree). It is the value an update or delete must send back as `If-Match`, and the same number the response's `ETag` carries, so a client that has read a resource can always name the version it read. `API_SPEC` section 17 keeps the version source, the required header, and the two result codes together: a missing `If-Match` answers `42801`, a stale one answers `41201`."
           }
         }
       },
@@ -2110,44 +1438,6 @@
           }
         }
       },
-      "CartItemPageData": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "items",
-          "pageInfo"
-        ],
-        "properties": {
-          "items": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CartItem"
-            }
-          },
-          "pageInfo": {
-            "$ref": "#/components/schemas/PageInfo"
-          }
-        }
-      },
-      "AddressPageData": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "items",
-          "pageInfo"
-        ],
-        "properties": {
-          "items": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Address"
-            }
-          },
-          "pageInfo": {
-            "$ref": "#/components/schemas/PageInfo"
-          }
-        }
-      },
       "CatalogCategoryData": {
         "type": "object",
         "additionalProperties": false,
@@ -2181,30 +1471,6 @@
         "properties": {
           "item": {
             "$ref": "#/components/schemas/CatalogSku"
-          }
-        }
-      },
-      "CartItemData": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "item"
-        ],
-        "properties": {
-          "item": {
-            "$ref": "#/components/schemas/CartItem"
-          }
-        }
-      },
-      "AddressData": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "item"
-        ],
-        "properties": {
-          "item": {
-            "$ref": "#/components/schemas/Address"
           }
         }
       },
@@ -2329,78 +1595,6 @@
             "properties": {
               "data": {
                 "$ref": "#/components/schemas/CatalogSkuData"
-              }
-            }
-          }
-        ]
-      },
-      "CartItemListResponse": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/SdkWorkApiResponse"
-          },
-          {
-            "type": "object",
-            "required": [
-              "data"
-            ],
-            "properties": {
-              "data": {
-                "$ref": "#/components/schemas/CartItemPageData"
-              }
-            }
-          }
-        ]
-      },
-      "CartItemResponse": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/SdkWorkApiResponse"
-          },
-          {
-            "type": "object",
-            "required": [
-              "data"
-            ],
-            "properties": {
-              "data": {
-                "$ref": "#/components/schemas/CartItemData"
-              }
-            }
-          }
-        ]
-      },
-      "AddressListResponse": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/SdkWorkApiResponse"
-          },
-          {
-            "type": "object",
-            "required": [
-              "data"
-            ],
-            "properties": {
-              "data": {
-                "$ref": "#/components/schemas/AddressPageData"
-              }
-            }
-          }
-        ]
-      },
-      "AddressResponse": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/SdkWorkApiResponse"
-          },
-          {
-            "type": "object",
-            "required": [
-              "data"
-            ],
-            "properties": {
-              "data": {
-                "$ref": "#/components/schemas/AddressData"
               }
             }
           }

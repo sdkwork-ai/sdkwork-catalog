@@ -1,35 +1,52 @@
 //! App browse/open catalog HTTP routes (owned by catalog capability).
+//!
+//! # Read-only by design
+//!
+//! This surface publishes the buyer-facing read model: category, attribute, product, and SKU
+//! lookups. The cart and buyer-address collections that used to live here are **retired** — those
+//! tables and their DTOs were removed from the merchandise catalog module, and
+//! `sdkwork-merchandise-service/tests/catalog_standard.rs` asserts that neither `commerce_cart` nor
+//! `commerce_user_address` reappears. A store that owns no cart cannot publish a cart route, so the
+//! handlers are deleted rather than stubbed.
+//!
+//! Nothing here writes, which is why no handler reads `If-Match` and none answers `428`: the
+//! optimistic-concurrency preconditions belong to the surfaces that actually mutate a row.
 
 use std::sync::Arc;
 
 use axum::extract::{Extension, Path, Query, State};
 use axum::response::Response;
-use axum::routing::{get, patch, put};
-use axum::{Json, Router};
+use axum::routing::get;
+use axum::Router;
+use sdkwork_database_id::IdGenerator;
 use sdkwork_iam_context_service::IamAppContext;
 use sdkwork_merchandise_repository_sqlx::PostgresCommerceCatalogStore;
 use sdkwork_merchandise_service::{
-    AddCartItemCommand, AddressListQuery, AttributeListQuery, CartRetrieveQuery, CategoryListQuery,
-    CategoryRetrieveQuery, CreateAddressCommand, DeleteAddressCommand, ProductSkuListQuery,
-    ProductSkuRetrieveQuery, ProductSpuListQuery, ProductSpuRetrieveQuery, RemoveCartItemCommand,
-    SetDefaultAddressCommand, UpdateAddressCommand, UpdateCartItemCommand,
+    AttributeListQuery, CatalogRepositoryPort, CategoryListQuery, CategoryRetrieveQuery,
+    ProductSkuListQuery, ProductSkuRetrieveQuery, ProductSpuListQuery, ProductSpuRetrieveQuery,
 };
 use sdkwork_merchandise_web_support::{
-    catalog_system_response, map_address, map_attribute, map_cart_item, map_category, map_sku,
-    map_spu, not_found_response, success_created_resource, success_no_content, success_offset_page,
-    success_resource, unauthorized_response, validation_response, AddCartItemBody, CatalogState,
-    CommerceCatalogStore, CreateAddressBody, UpdateAddressBody, UpdateCartItemBody,
+    catalog_error_response, map_attribute, map_category, map_product, map_sku, not_found_response,
+    success_offset_page, success_resource, unauthorized_response, validation_response, CatalogState,
 };
 use serde::Deserialize;
 use sqlx::PgPool;
 
 use crate::subject::app_runtime_subject_from_extension;
 
-pub fn app_catalog_router_with_postgres_pool(pool: PgPool) -> Router {
-    build_app_catalog_router(Arc::new(PostgresCommerceCatalogStore::new(pool)))
+/// Mounts the app catalog routes over the authoritative PostgreSQL pool and the process identity.
+///
+/// The generator is a parameter, not a process global: the composition root owns the node identity,
+/// and one process must not run two Snowflake sequences over one node id.
+pub fn app_catalog_router_with_postgres_pool(pool: PgPool, ids: Arc<dyn IdGenerator>) -> Router {
+    build_app_catalog_router(Arc::new(PostgresCommerceCatalogStore::new(pool, ids)))
 }
 
-pub fn build_app_catalog_router(store: Arc<dyn CommerceCatalogStore>) -> Router {
+/// Mounts the app catalog routes over a store the caller has already constructed.
+///
+/// The store arrives as the service-owned port, so this crate never names a database or a concrete
+/// repository; construction belongs to the composition root.
+pub fn build_app_catalog_router(store: Arc<dyn CatalogRepositoryPort>) -> Router {
     Router::new()
         .route("/app/v3/api/catalog/categories", get(app_list_categories))
         .route(
@@ -47,28 +64,9 @@ pub fn build_app_catalog_router(store: Arc<dyn CommerceCatalogStore>) -> Router 
             get(app_list_product_skus),
         )
         .route("/app/v3/api/catalog/skus/{skuId}", get(app_retrieve_sku))
-        .route(
-            "/app/v3/api/cart/items",
-            get(app_list_cart).post(app_add_cart_item),
-        )
-        .route(
-            "/app/v3/api/cart/items/{cartItemId}",
-            patch(app_update_cart_item).delete(app_remove_cart_item),
-        )
-        .route(
-            "/app/v3/api/addresses",
-            get(app_list_addresses).post(app_create_address),
-        )
-        .route(
-            "/app/v3/api/addresses/{addressId}",
-            patch(app_update_address).delete(app_delete_address),
-        )
-        .route(
-            "/app/v3/api/addresses/{addressId}/default_selection",
-            put(app_set_default_address),
-        )
         .with_state(CatalogState { store })
 }
+
 async fn app_list_categories(
     State(state): State<CatalogState>,
     runtime_context: Option<Extension<IamAppContext>>,
@@ -96,7 +94,7 @@ async fn app_list_categories(
             data.page_size,
             data.total_items,
         ),
-        Err(error) => catalog_system_response("category list is unavailable", error),
+        Err(error) => catalog_error_response("category list is unavailable", error),
     }
 }
 
@@ -116,7 +114,7 @@ async fn app_retrieve_category(
     match state.store.retrieve_category(query).await {
         Ok(Some(category)) => success_resource(map_category(category)),
         Ok(None) => not_found_response("category was not found"),
-        Err(error) => catalog_system_response("category read model is unavailable", error),
+        Err(error) => catalog_error_response("category read model is unavailable", error),
     }
 }
 
@@ -146,10 +144,20 @@ async fn app_list_attributes(
             data.page_size,
             data.total_items,
         ),
-        Err(error) => catalog_system_response("attribute list is unavailable", error),
+        Err(error) => catalog_error_response("attribute list is unavailable", error),
     }
 }
 
+/// Lists the buyer-visible products of the caller's scope.
+///
+/// `organization_id` comes from the authenticated context, with the caller-supplied `shop_id` as an
+/// override — a shop is an organization-owned storefront, so `shop_id` narrows the same axis rather
+/// than introducing a second one.
+///
+/// The domain's `q` / `attribute_value_id` filters are passed as `None`: this collection's authored
+/// contract declares `shop_id`, `category_id`, `product_type`, and `sort` and nothing else, and a
+/// filter the document does not publish must not be read from the transport. The status filter is
+/// pinned to `active` because every route on this surface is the buyer's view of the catalog.
 async fn app_list_products(
     State(state): State<CatalogState>,
     runtime_context: Option<Extension<IamAppContext>>,
@@ -162,6 +170,7 @@ async fn app_list_products(
     let query = match ProductSpuListQuery::new(
         &subject.tenant_id,
         params.shop_id.as_deref().or(subject.organization_id.as_deref()),
+        None,
         params.category_id.as_deref(),
         params.product_type.as_deref(),
         Some("active"),
@@ -174,12 +183,12 @@ async fn app_list_products(
     };
     match state.store.list_spus_page(query).await {
         Ok(data) => success_offset_page(
-            data.items.into_iter().map(map_spu).collect(),
+            data.items.into_iter().map(map_product).collect(),
             data.page,
             data.page_size,
             data.total_items,
         ),
-        Err(error) => catalog_system_response("product list is unavailable", error),
+        Err(error) => catalog_error_response("product list is unavailable", error),
     }
 }
 
@@ -212,6 +221,10 @@ struct AppProductListQueryParams {
     page_size: Option<i64>,
 }
 
+/// Lists the SKUs of one product.
+///
+/// `attribute_value_id` is passed as `None` for the same reason the product list passes `q`: the
+/// authored contract for this route declares `page` and `page_size` only.
 async fn app_list_product_skus(
     State(state): State<CatalogState>,
     runtime_context: Option<Extension<IamAppContext>>,
@@ -226,6 +239,7 @@ async fn app_list_product_skus(
         &subject.tenant_id,
         subject.organization_id.as_deref(),
         Some(&product_id),
+        None,
         Some("active"),
         params.page,
         params.page_size,
@@ -240,7 +254,7 @@ async fn app_list_product_skus(
             data.page_size,
             data.total_items,
         ),
-        Err(error) => catalog_system_response("product sku list is unavailable", error),
+        Err(error) => catalog_error_response("product sku list is unavailable", error),
     }
 }
 
@@ -258,9 +272,9 @@ async fn app_retrieve_product(
         Err(error) => return validation_response(error.message()),
     };
     match state.store.retrieve_spu(query).await {
-        Ok(Some(data)) => success_resource(map_spu(data)),
+        Ok(Some(data)) => success_resource(map_product(data)),
         Ok(None) => not_found_response("product was not found"),
-        Err(error) => catalog_system_response("product read model is unavailable", error),
+        Err(error) => catalog_error_response("product read model is unavailable", error),
     }
 }
 
@@ -280,247 +294,6 @@ async fn app_retrieve_sku(
     match state.store.retrieve_sku(query).await {
         Ok(Some(data)) => success_resource(map_sku(data)),
         Ok(None) => not_found_response("sku was not found"),
-        Err(error) => catalog_system_response("sku read model is unavailable", error),
-    }
-}
-
-async fn app_list_cart(
-    State(state): State<CatalogState>,
-    runtime_context: Option<Extension<IamAppContext>>,
-    Query(params): Query<OffsetListQueryParams>,
-) -> Response {
-    let subject = match app_runtime_subject_from_extension(runtime_context) {
-        Ok(subject) => subject,
-        Err(message) => return unauthorized_response(message),
-    };
-    let query = match CartRetrieveQuery::new(
-        &subject.tenant_id,
-        &subject.user_id,
-        params.page,
-        params.page_size,
-    ) {
-        Ok(query) => query,
-        Err(error) => return validation_response(error.message()),
-    };
-    match state.store.list_cart_items_page(query).await {
-        Ok(data) => success_offset_page(
-            data.items.into_iter().map(map_cart_item).collect(),
-            data.page,
-            data.page_size,
-            data.total_items,
-        ),
-        Err(error) => catalog_system_response("cart read model is unavailable", error),
-    }
-}
-
-async fn app_add_cart_item(
-    State(state): State<CatalogState>,
-    runtime_context: Option<Extension<IamAppContext>>,
-    Json(body): Json<AddCartItemBody>,
-) -> Response {
-    let subject = match app_runtime_subject_from_extension(runtime_context) {
-        Ok(subject) => subject,
-        Err(message) => return unauthorized_response(message),
-    };
-    let command = AddCartItemCommand {
-        tenant_id: subject.tenant_id,
-        owner_user_id: subject.user_id,
-        sku_id: body.sku_id,
-        quantity: body.quantity,
-    };
-    match command.validate() {
-        Ok(()) => {}
-        Err(error) => return validation_response(error.message()),
-    }
-    match state.store.add_cart_item(command).await {
-        Ok(data) => success_created_resource(map_cart_item(data)),
-        Err(error) => catalog_system_response("failed to add cart item", error),
-    }
-}
-
-async fn app_update_cart_item(
-    State(state): State<CatalogState>,
-    runtime_context: Option<Extension<IamAppContext>>,
-    Path(cart_item_id): Path<String>,
-    Json(body): Json<UpdateCartItemBody>,
-) -> Response {
-    let subject = match app_runtime_subject_from_extension(runtime_context) {
-        Ok(subject) => subject,
-        Err(message) => return unauthorized_response(message),
-    };
-    let command = UpdateCartItemCommand {
-        tenant_id: subject.tenant_id,
-        owner_user_id: subject.user_id,
-        cart_item_id,
-        quantity: body.quantity,
-    };
-    match command.validate() {
-        Ok(()) => {}
-        Err(error) => return validation_response(error.message()),
-    }
-    match state.store.update_cart_item(command).await {
-        Ok(data) => success_resource(map_cart_item(data)),
-        Err(error) => catalog_system_response("failed to update cart item", error),
-    }
-}
-
-async fn app_remove_cart_item(
-    State(state): State<CatalogState>,
-    runtime_context: Option<Extension<IamAppContext>>,
-    Path(cart_item_id): Path<String>,
-) -> Response {
-    let subject = match app_runtime_subject_from_extension(runtime_context) {
-        Ok(subject) => subject,
-        Err(message) => return unauthorized_response(message),
-    };
-    let command = RemoveCartItemCommand {
-        tenant_id: subject.tenant_id,
-        owner_user_id: subject.user_id,
-        cart_item_id,
-    };
-    match command.validate() {
-        Ok(()) => {}
-        Err(error) => return validation_response(error.message()),
-    }
-    match state.store.remove_cart_item(command).await {
-        Ok(()) => success_no_content(),
-        Err(error) => catalog_system_response("failed to remove cart item", error),
-    }
-}
-
-async fn app_list_addresses(
-    State(state): State<CatalogState>,
-    runtime_context: Option<Extension<IamAppContext>>,
-    Query(params): Query<OffsetListQueryParams>,
-) -> Response {
-    let subject = match app_runtime_subject_from_extension(runtime_context) {
-        Ok(subject) => subject,
-        Err(message) => return unauthorized_response(message),
-    };
-    let query = match AddressListQuery::new(
-        &subject.tenant_id,
-        &subject.user_id,
-        params.page,
-        params.page_size,
-    ) {
-        Ok(query) => query,
-        Err(error) => return validation_response(error.message()),
-    };
-    match state.store.list_addresses_page(query).await {
-        Ok(data) => success_offset_page(
-            data.items.into_iter().map(map_address).collect(),
-            data.page,
-            data.page_size,
-            data.total_items,
-        ),
-        Err(error) => catalog_system_response("address list is unavailable", error),
-    }
-}
-
-async fn app_create_address(
-    State(state): State<CatalogState>,
-    runtime_context: Option<Extension<IamAppContext>>,
-    Json(body): Json<CreateAddressBody>,
-) -> Response {
-    let subject = match app_runtime_subject_from_extension(runtime_context) {
-        Ok(subject) => subject,
-        Err(message) => return unauthorized_response(message),
-    };
-    let command = CreateAddressCommand {
-        tenant_id: subject.tenant_id,
-        owner_user_id: subject.user_id,
-        receiver_name: body.receiver_name,
-        receiver_phone: body.receiver_phone,
-        country_code: body.country_code,
-        province: body.province,
-        city: body.city,
-        detail_address: body.detail_address,
-        is_default: body.is_default.unwrap_or(false),
-    };
-    match command.validate() {
-        Ok(()) => {}
-        Err(error) => return validation_response(error.message()),
-    }
-    match state.store.create_address(command).await {
-        Ok(data) => success_created_resource(map_address(data)),
-        Err(error) => catalog_system_response("failed to create address", error),
-    }
-}
-
-async fn app_update_address(
-    State(state): State<CatalogState>,
-    runtime_context: Option<Extension<IamAppContext>>,
-    Path(address_id): Path<String>,
-    Json(body): Json<UpdateAddressBody>,
-) -> Response {
-    let subject = match app_runtime_subject_from_extension(runtime_context) {
-        Ok(subject) => subject,
-        Err(message) => return unauthorized_response(message),
-    };
-    let command = UpdateAddressCommand {
-        tenant_id: subject.tenant_id,
-        owner_user_id: subject.user_id,
-        address_id,
-        receiver_name: body.receiver_name,
-        receiver_phone: body.receiver_phone,
-        province: body.province,
-        city: body.city,
-        detail_address: body.detail_address,
-    };
-    match command.validate() {
-        Ok(()) => {}
-        Err(error) => return validation_response(error.message()),
-    }
-    match state.store.update_address(command).await {
-        Ok(data) => success_resource(map_address(data)),
-        Err(error) => catalog_system_response("failed to update address", error),
-    }
-}
-
-async fn app_delete_address(
-    State(state): State<CatalogState>,
-    runtime_context: Option<Extension<IamAppContext>>,
-    Path(address_id): Path<String>,
-) -> Response {
-    let subject = match app_runtime_subject_from_extension(runtime_context) {
-        Ok(subject) => subject,
-        Err(message) => return unauthorized_response(message),
-    };
-    let command = DeleteAddressCommand {
-        tenant_id: subject.tenant_id,
-        owner_user_id: subject.user_id,
-        address_id,
-    };
-    match command.validate() {
-        Ok(()) => {}
-        Err(error) => return validation_response(error.message()),
-    }
-    match state.store.delete_address(command).await {
-        Ok(()) => success_no_content(),
-        Err(error) => catalog_system_response("failed to delete address", error),
-    }
-}
-
-async fn app_set_default_address(
-    State(state): State<CatalogState>,
-    runtime_context: Option<Extension<IamAppContext>>,
-    Path(address_id): Path<String>,
-) -> Response {
-    let subject = match app_runtime_subject_from_extension(runtime_context) {
-        Ok(subject) => subject,
-        Err(message) => return unauthorized_response(message),
-    };
-    let command = SetDefaultAddressCommand {
-        tenant_id: subject.tenant_id,
-        owner_user_id: subject.user_id,
-        address_id,
-    };
-    match command.validate() {
-        Ok(()) => {}
-        Err(error) => return validation_response(error.message()),
-    }
-    match state.store.set_default_address(command).await {
-        Ok(data) => success_resource(map_address(data)),
-        Err(error) => catalog_system_response("failed to set default address", error),
+        Err(error) => catalog_error_response("sku read model is unavailable", error),
     }
 }
