@@ -1,0 +1,33 @@
+lockfileVersion: '9.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+importers:
+
+  .:
+    dependencies:
+      '@sdkwork/sdk-common':
+        specifier: ^1.0.8
+        version: 1.0.9
+      '@sdkwork/utils':
+        specifier: ^0.11.0
+        version: 0.11.0
+
+packages:
+
+  '@sdkwork/sdk-common@1.0.9':
+    resolution: {integrity: sha512-XxBsHd8aRULe3cp/hPmlqGoJshMaM47bEXLTAZfEzYEXBUUmKmFTZhhjkVVYaNxIFo1nh5T7bXTjXhffiRkgvg==}
+    engines: {node: '>=18.0.0'}
+
+  '@sdkwork/utils@0.11.0':
+    resolution: {integrity: sha512-GTW9LPBkrNy3jdzbnEGzLd1wRYZly5NNkXt2W0ZZElmsbAfkEIi9oFa1O4+E9lSDwsYRkHjNvzeAb8waacVTow==}
+
+snapshots:
+
+  '@sdkwork/sdk-common@1.0.9':
+    dependencies:
+      '@sdkwork/utils': 0.11.0
+
+  '@sdkwork/utils@0.11.0': {}
