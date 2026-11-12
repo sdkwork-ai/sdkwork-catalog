@@ -81,6 +81,7 @@ async fn app_list_categories(
         subject.organization_id.as_deref(),
         params.parent_id.as_deref(),
         Some("active"),
+        None,
         params.page,
         params.page_size,
     ) {
@@ -131,6 +132,7 @@ async fn app_list_attributes(
         &subject.tenant_id,
         subject.organization_id.as_deref(),
         Some("active"),
+        None,
         params.page,
         params.page_size,
     ) {
@@ -172,9 +174,11 @@ async fn app_list_products(
         params.shop_id.as_deref().or(subject.organization_id.as_deref()),
         None,
         params.category_id.as_deref(),
+        None,
         params.product_type.as_deref(),
         Some("active"),
         params.sort.as_deref(),
+        None,
         params.page,
         params.page_size,
     ) {
@@ -241,6 +245,7 @@ async fn app_list_product_skus(
         Some(&product_id),
         None,
         Some("active"),
+        None,
         params.page,
         params.page_size,
     ) {
