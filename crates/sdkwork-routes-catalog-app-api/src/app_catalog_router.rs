@@ -103,12 +103,17 @@ async fn app_retrieve_category(
     State(state): State<CatalogState>,
     runtime_context: Option<Extension<IamAppContext>>,
     Path(category_id): Path<String>,
+    Query(params): Query<RetrieveQueryParams>,
 ) -> Response {
     let subject = match app_runtime_subject_from_extension(runtime_context) {
         Ok(subject) => subject,
         Err(message) => return unauthorized_response(message),
     };
-    let query = match CategoryRetrieveQuery::new(&subject.tenant_id, &category_id) {
+    let query = match CategoryRetrieveQuery::new(
+        &subject.tenant_id,
+        &category_id,
+        params.locale.as_deref(),
+    ) {
         Ok(query) => query,
         Err(error) => return validation_response(error.message().to_string()),
     };
@@ -197,6 +202,11 @@ async fn app_list_products(
 }
 
 #[derive(Debug, Deserialize)]
+struct RetrieveQueryParams {
+    locale: Option<String>,
+}
+
+#[derive(Debug, Deserialize)]
 struct ProductSkuListQueryParams {
     page: Option<i64>,
     page_size: Option<i64>,
@@ -267,12 +277,17 @@ async fn app_retrieve_product(
     State(state): State<CatalogState>,
     runtime_context: Option<Extension<IamAppContext>>,
     Path(product_id): Path<String>,
+    Query(params): Query<RetrieveQueryParams>,
 ) -> Response {
     let subject = match app_runtime_subject_from_extension(runtime_context) {
         Ok(subject) => subject,
         Err(message) => return unauthorized_response(message),
     };
-    let query = match ProductSpuRetrieveQuery::new(&subject.tenant_id, &product_id) {
+    let query = match ProductSpuRetrieveQuery::new(
+        &subject.tenant_id,
+        &product_id,
+        params.locale.as_deref(),
+    ) {
         Ok(query) => query,
         Err(error) => return validation_response(error.message()),
     };
@@ -287,12 +302,17 @@ async fn app_retrieve_sku(
     State(state): State<CatalogState>,
     runtime_context: Option<Extension<IamAppContext>>,
     Path(sku_id): Path<String>,
+    Query(params): Query<RetrieveQueryParams>,
 ) -> Response {
     let subject = match app_runtime_subject_from_extension(runtime_context) {
         Ok(subject) => subject,
         Err(message) => return unauthorized_response(message),
     };
-    let query = match ProductSkuRetrieveQuery::new(&subject.tenant_id, &sku_id) {
+    let query = match ProductSkuRetrieveQuery::new(
+        &subject.tenant_id,
+        &sku_id,
+        params.locale.as_deref(),
+    ) {
         Ok(query) => query,
         Err(error) => return validation_response(error.message()),
     };
