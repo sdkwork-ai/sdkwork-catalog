@@ -12,16 +12,6 @@ pub(crate) struct AppRuntimeSubject {
     pub user_id: String,
 }
 
-pub(crate) fn app_runtime_subject_from_extension(
-    context: Option<Extension<IamAppContext>>,
-) -> Result<AppRuntimeSubject, String> {
-    let Some(Extension(context)) = context else {
-        return Err("authenticated runtime context is required".to_owned());
-    };
-
-    app_runtime_subject_from_iam(&context)
-}
-
 pub(crate) fn app_runtime_subject_from_iam(
     context: &IamAppContext,
 ) -> Result<AppRuntimeSubject, String> {
@@ -43,6 +33,42 @@ pub(crate) fn app_runtime_subject_from_iam(
 
         user_id,
     })
+}
+
+/// Tenant id resolved for optional-credential storefront routes.
+///
+/// App-api storefront reads (`DualTokenOrAnonymous`) admit visitors without a
+/// user session, and the catalog read model lives in the platform's public
+/// tenant. A deployment overrides the default with `CATALOG_PUBLIC_TENANT_ID`.
+pub(crate) fn public_tenant_id() -> String {
+    std::env::var("CATALOG_PUBLIC_TENANT_ID")
+        .ok()
+        .map(|value| value.trim().to_owned())
+        .filter(|value| !value.is_empty())
+        .unwrap_or_else(|| "100001".to_owned())
+}
+
+/// Resolves the storefront subject for optional-credential routes.
+///
+/// A signed-in dual-token request still resolves the real principal, so the
+/// caller's tenant and organization keep applying. A request without a
+/// principal is an anonymous catalog browse: it reads the public tenant with no
+/// organization and no user, which is exactly the scope the storefront shows.
+pub(crate) fn app_storefront_subject_from_extension(
+    context: Option<Extension<IamAppContext>>,
+) -> Result<AppRuntimeSubject, String> {
+    match context {
+        Some(Extension(context)) => app_runtime_subject_from_iam(&context),
+        None => Ok(anonymous_public_subject()),
+    }
+}
+
+fn anonymous_public_subject() -> AppRuntimeSubject {
+    AppRuntimeSubject {
+        tenant_id: public_tenant_id(),
+        organization_id: None,
+        user_id: String::new(),
+    }
 }
 
 fn required_context_text(value: &str, field_name: &'static str) -> Result<String, String> {
