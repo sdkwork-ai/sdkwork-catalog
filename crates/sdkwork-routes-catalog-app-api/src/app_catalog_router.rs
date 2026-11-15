@@ -32,7 +32,7 @@ use sdkwork_merchandise_web_support::{
 use serde::Deserialize;
 use sqlx::PgPool;
 
-use crate::subject::app_runtime_subject_from_extension;
+use crate::subject::app_storefront_subject_from_extension;
 
 /// Mounts the app catalog routes over the authoritative PostgreSQL pool and the process identity.
 ///
@@ -72,7 +72,7 @@ async fn app_list_categories(
     runtime_context: Option<Extension<IamAppContext>>,
     Query(params): Query<AppCategoryListQueryParams>,
 ) -> Response {
-    let subject = match app_runtime_subject_from_extension(runtime_context) {
+    let subject = match app_storefront_subject_from_extension(runtime_context) {
         Ok(subject) => subject,
         Err(message) => return unauthorized_response(message),
     };
@@ -81,6 +81,7 @@ async fn app_list_categories(
         subject.organization_id.as_deref(),
         params.parent_id.as_deref(),
         Some("active"),
+        None,
         params.page,
         params.page_size,
     ) {
@@ -103,11 +104,11 @@ async fn app_retrieve_category(
     runtime_context: Option<Extension<IamAppContext>>,
     Path(category_id): Path<String>,
 ) -> Response {
-    let subject = match app_runtime_subject_from_extension(runtime_context) {
+    let subject = match app_storefront_subject_from_extension(runtime_context) {
         Ok(subject) => subject,
         Err(message) => return unauthorized_response(message),
     };
-    let query = match CategoryRetrieveQuery::new(&subject.tenant_id, &category_id) {
+    let query = match CategoryRetrieveQuery::new(&subject.tenant_id, &category_id, None) {
         Ok(query) => query,
         Err(error) => return validation_response(error.message().to_string()),
     };
@@ -123,7 +124,7 @@ async fn app_list_attributes(
     runtime_context: Option<Extension<IamAppContext>>,
     Query(params): Query<OffsetListQueryParams>,
 ) -> Response {
-    let subject = match app_runtime_subject_from_extension(runtime_context) {
+    let subject = match app_storefront_subject_from_extension(runtime_context) {
         Ok(subject) => subject,
         Err(message) => return unauthorized_response(message),
     };
@@ -131,6 +132,7 @@ async fn app_list_attributes(
         &subject.tenant_id,
         subject.organization_id.as_deref(),
         Some("active"),
+        None,
         params.page,
         params.page_size,
     ) {
@@ -163,7 +165,7 @@ async fn app_list_products(
     runtime_context: Option<Extension<IamAppContext>>,
     Query(params): Query<AppProductListQueryParams>,
 ) -> Response {
-    let subject = match app_runtime_subject_from_extension(runtime_context) {
+    let subject = match app_storefront_subject_from_extension(runtime_context) {
         Ok(subject) => subject,
         Err(message) => return unauthorized_response(message),
     };
@@ -172,9 +174,11 @@ async fn app_list_products(
         params.shop_id.as_deref().or(subject.organization_id.as_deref()),
         None,
         params.category_id.as_deref(),
+        None,
         params.product_type.as_deref(),
         Some("active"),
         params.sort.as_deref(),
+        None,
         params.page,
         params.page_size,
     ) {
@@ -231,7 +235,7 @@ async fn app_list_product_skus(
     Path(product_id): Path<String>,
     Query(params): Query<ProductSkuListQueryParams>,
 ) -> Response {
-    let subject = match app_runtime_subject_from_extension(runtime_context) {
+    let subject = match app_storefront_subject_from_extension(runtime_context) {
         Ok(subject) => subject,
         Err(message) => return unauthorized_response(message),
     };
@@ -241,6 +245,7 @@ async fn app_list_product_skus(
         Some(&product_id),
         None,
         Some("active"),
+        None,
         params.page,
         params.page_size,
     ) {
@@ -263,11 +268,11 @@ async fn app_retrieve_product(
     runtime_context: Option<Extension<IamAppContext>>,
     Path(product_id): Path<String>,
 ) -> Response {
-    let subject = match app_runtime_subject_from_extension(runtime_context) {
+    let subject = match app_storefront_subject_from_extension(runtime_context) {
         Ok(subject) => subject,
         Err(message) => return unauthorized_response(message),
     };
-    let query = match ProductSpuRetrieveQuery::new(&subject.tenant_id, &product_id) {
+    let query = match ProductSpuRetrieveQuery::new(&subject.tenant_id, &product_id, None) {
         Ok(query) => query,
         Err(error) => return validation_response(error.message()),
     };
@@ -283,11 +288,11 @@ async fn app_retrieve_sku(
     runtime_context: Option<Extension<IamAppContext>>,
     Path(sku_id): Path<String>,
 ) -> Response {
-    let subject = match app_runtime_subject_from_extension(runtime_context) {
+    let subject = match app_storefront_subject_from_extension(runtime_context) {
         Ok(subject) => subject,
         Err(message) => return unauthorized_response(message),
     };
-    let query = match ProductSkuRetrieveQuery::new(&subject.tenant_id, &sku_id) {
+    let query = match ProductSkuRetrieveQuery::new(&subject.tenant_id, &sku_id, None) {
         Ok(query) => query,
         Err(error) => return validation_response(error.message()),
     };

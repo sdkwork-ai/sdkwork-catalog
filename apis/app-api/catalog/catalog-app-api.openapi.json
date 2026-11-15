@@ -61,7 +61,8 @@
             "AuthToken": [],
             "AccessToken": []
           }
-        ]
+        ],
+        "x-sdkwork-auth-mode": "dual-token-or-anonymous"
       }
     },
     "/app/v3/api/catalog/categories": {
@@ -113,7 +114,8 @@
             "AuthToken": [],
             "AccessToken": []
           }
-        ]
+        ],
+        "x-sdkwork-auth-mode": "dual-token-or-anonymous"
       }
     },
     "/app/v3/api/catalog/categories/{categoryId}": {
@@ -156,7 +158,8 @@
             "AuthToken": [],
             "AccessToken": []
           }
-        ]
+        ],
+        "x-sdkwork-auth-mode": "dual-token-or-anonymous"
       }
     },
     "/app/v3/api/catalog/products": {
@@ -232,7 +235,8 @@
             "AuthToken": [],
             "AccessToken": []
           }
-        ]
+        ],
+        "x-sdkwork-auth-mode": "dual-token-or-anonymous"
       }
     },
     "/app/v3/api/catalog/products/{productId}": {
@@ -275,7 +279,8 @@
             "AuthToken": [],
             "AccessToken": []
           }
-        ]
+        ],
+        "x-sdkwork-auth-mode": "dual-token-or-anonymous"
       }
     },
     "/app/v3/api/catalog/products/{productId}/skus": {
@@ -325,7 +330,8 @@
             "AuthToken": [],
             "AccessToken": []
           }
-        ]
+        ],
+        "x-sdkwork-auth-mode": "dual-token-or-anonymous"
       }
     },
     "/app/v3/api/catalog/skus/{skuId}": {
@@ -368,7 +374,8 @@
             "AuthToken": [],
             "AccessToken": []
           }
-        ]
+        ],
+        "x-sdkwork-auth-mode": "dual-token-or-anonymous"
       }
     }
   },
