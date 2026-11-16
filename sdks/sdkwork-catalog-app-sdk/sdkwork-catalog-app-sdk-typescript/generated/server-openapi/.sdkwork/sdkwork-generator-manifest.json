@@ -56,7 +56,7 @@
     },
     {
       "path": "src/api/catalog.ts",
-      "sha256": "4a0a6f2dd1a5875c4d99431f712b7db10098fb7c7f50d6f4cf63edf1cd6b9daf"
+      "sha256": "4b998a1e39a22f2ab90785fe03e3a992f406503d1f76d0ab7a26464d116c30af"
     },
     {
       "path": "src/api/index.ts",
