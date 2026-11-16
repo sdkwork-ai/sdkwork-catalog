@@ -42,6 +42,7 @@ export class CatalogProductsSkusApi {
 }
 
 export interface CatalogProductsListParams {
+  q?: string;
   shopId?: string;
   categoryId?: string;
   productType?: string;
@@ -63,6 +64,7 @@ export class CatalogProductsApi {
 /** List active catalog products. */
   async list(params?: CatalogProductsListParams, requestOptions?: ApiRequestOptions): Promise<CatalogProductPageData> {
     const query = buildQueryString([
+      { name: 'q', value: params?.q, style: 'form', explode: true, allowReserved: false },
       { name: 'shop_id', value: params?.shopId, style: 'form', explode: true, allowReserved: false },
       { name: 'category_id', value: params?.categoryId, style: 'form', explode: true, allowReserved: false },
       { name: 'product_type', value: params?.productType, style: 'form', explode: true, allowReserved: false },

@@ -27,7 +27,8 @@ use sdkwork_merchandise_service::{
 };
 use sdkwork_merchandise_web_support::{
     catalog_error_response, map_attribute, map_category, map_product, map_sku, not_found_response,
-    success_offset_page, success_resource, unauthorized_response, validation_response, CatalogState,
+    success_offset_page, success_resource, unauthorized_response, validation_response,
+    CatalogState,
 };
 use serde::Deserialize;
 use sqlx::PgPool;
@@ -161,8 +162,9 @@ async fn app_list_attributes(
 /// override — a shop is an organization-owned storefront, so `shop_id` narrows the same axis rather
 /// than introducing a second one.
 ///
-/// The domain's `q` / `attribute_value_id` filters are passed as `None`: this collection's authored
-/// contract declares `shop_id`, `category_id`, `product_type`, and `sort` and nothing else, and a
+/// The domain's `q` filter is published on this collection: the storefront search box sends it and
+/// the read model binds it as a parameter, building the `ILIKE` pattern inside the driver.
+/// `attribute_value_id` stays `None` because the authored contract does not declare it, and a
 /// filter the document does not publish must not be read from the transport. The status filter is
 /// pinned to `active` because every route on this surface is the buyer's view of the catalog.
 async fn app_list_products(
@@ -176,8 +178,11 @@ async fn app_list_products(
     };
     let query = match ProductSpuListQuery::new(
         &subject.tenant_id,
-        params.shop_id.as_deref().or(subject.organization_id.as_deref()),
-        None,
+        params
+            .shop_id
+            .as_deref()
+            .or(subject.organization_id.as_deref()),
+        params.q.as_deref(),
         params.category_id.as_deref(),
         None,
         params.product_type.as_deref(),
@@ -227,6 +232,7 @@ struct AppCategoryListQueryParams {
 
 #[derive(Debug, Deserialize)]
 struct AppProductListQueryParams {
+    q: Option<String>,
     shop_id: Option<String>,
     category_id: Option<String>,
     product_type: Option<String>,

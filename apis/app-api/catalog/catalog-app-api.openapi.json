@@ -168,8 +168,17 @@
           "catalog"
         ],
         "summary": "List active catalog products.",
+        "description": "Buyer-facing browse collection. `q` is free-text over the product number, name and title; `shop_id` narrows the page to one organization-owned shop; `sort` accepts `price-asc` and `price-desc` (anything else keeps the newest-first default).",
         "operationId": "products.list",
         "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
           {
             "name": "shop_id",
             "in": "query",
