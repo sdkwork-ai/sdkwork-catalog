@@ -85,6 +85,7 @@ async fn app_list_categories(
         None,
         params.page,
         params.page_size,
+        params.root_only.unwrap_or(false),
     ) {
         Ok(query) => query,
         Err(error) => return validation_response(error.message()),
@@ -226,6 +227,7 @@ struct OffsetListQueryParams {
 #[derive(Debug, Deserialize)]
 struct AppCategoryListQueryParams {
     parent_id: Option<String>,
+    root_only: Option<bool>,
     page: Option<i64>,
     page_size: Option<i64>,
 }
