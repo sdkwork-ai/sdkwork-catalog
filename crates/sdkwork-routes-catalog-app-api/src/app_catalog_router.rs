@@ -26,9 +26,9 @@ use sdkwork_merchandise_service::{
     ProductSkuListQuery, ProductSkuRetrieveQuery, ProductSpuListQuery, ProductSpuRetrieveQuery,
 };
 use sdkwork_merchandise_web_support::{
-    catalog_error_response, map_attribute, map_category, map_product, map_sku, not_found_response,
-    success_offset_page, success_resource, unauthorized_response, validation_response,
-    CatalogState,
+    catalog_error_response, map_attribute, map_category, map_product, map_product_with_skus, map_sku,
+    not_found_response, success_offset_page, success_resource, unauthorized_response,
+    validation_response, CatalogState,
 };
 use serde::Deserialize;
 use sqlx::PgPool;
@@ -300,7 +300,25 @@ async fn app_retrieve_product(
         Err(error) => return validation_response(error.message()),
     };
     match state.store.retrieve_spu(query).await {
-        Ok(Some(data)) => success_resource(map_product(data)),
+        Ok(Some(data)) => {
+            let sku_query = match ProductSkuListQuery::new(
+                &subject.tenant_id,
+                subject.organization_id.as_deref(),
+                Some(product_id.as_str()),
+                None,
+                Some("active"),
+                params.locale.as_deref(),
+                Some(1),
+                Some(200),
+            ) {
+                Ok(query) => query,
+                Err(error) => return validation_response(error.message()),
+            };
+            match state.store.list_skus_page(sku_query).await {
+                Ok(skus) => success_resource(map_product_with_skus(data, skus.items)),
+                Err(error) => catalog_error_response("product sku read model is unavailable", error),
+            }
+        }
         Ok(None) => not_found_response("product was not found"),
         Err(error) => catalog_error_response("product read model is unavailable", error),
     }
