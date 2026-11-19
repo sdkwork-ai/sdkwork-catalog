@@ -23,12 +23,13 @@ use sdkwork_iam_context_service::IamAppContext;
 use sdkwork_merchandise_repository_sqlx::PostgresCommerceCatalogStore;
 use sdkwork_merchandise_service::{
     AttributeListQuery, CatalogRepositoryPort, CategoryListQuery, CategoryRetrieveQuery,
-    ProductSkuListQuery, ProductSkuRetrieveQuery, ProductSpuListQuery, ProductSpuRetrieveQuery,
+    MediaListQuery, ProductSkuListQuery, ProductSkuRetrieveQuery, ProductSpuListQuery,
+    ProductSpuRetrieveQuery,
 };
 use sdkwork_merchandise_web_support::{
-    catalog_error_response, map_attribute, map_category, map_product, map_product_with_skus, map_sku,
-    not_found_response, success_offset_page, success_resource, unauthorized_response,
-    validation_response, CatalogState,
+    catalog_error_response, map_attribute, map_category, map_product, map_product_detail, map_sku,
+    media_snapshot_url, not_found_response, success_offset_page, success_resource,
+    unauthorized_response, validation_response, CatalogState,
 };
 use serde::Deserialize;
 use sqlx::PgPool;
@@ -315,7 +316,31 @@ async fn app_retrieve_product(
                 Err(error) => return validation_response(error.message()),
             };
             match state.store.list_skus_page(sku_query).await {
-                Ok(skus) => success_resource(map_product_with_skus(data, skus.items)),
+                Ok(skus) => {
+                    let images = match MediaListQuery::new(
+                        &subject.tenant_id,
+                        subject.organization_id.as_deref(),
+                        Some("spu"),
+                        Some(product_id.as_str()),
+                        None,
+                        Some("active"),
+                        Some(1),
+                        Some(50),
+                    ) {
+                        Ok(media_query) => match state.store.list_media_page(media_query).await {
+                            Ok(page) => page
+                                .items
+                                .iter()
+                                .filter_map(|media| media_snapshot_url(&media.resource_snapshot))
+                                .collect::<Vec<_>>(),
+                            // A gallery read failure must not block the PDP; the
+                            // primary imageUrl still renders.
+                            Err(_) => Vec::new(),
+                        },
+                        Err(_) => Vec::new(),
+                    };
+                    success_resource(map_product_detail(data, skus.items, images))
+                }
                 Err(error) => catalog_error_response("product sku read model is unavailable", error),
             }
         }

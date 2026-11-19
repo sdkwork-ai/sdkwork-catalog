@@ -984,6 +984,13 @@
             },
             "description": "Sellable SKUs on detail reads; empty on list reads."
           },
+          "images": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Renderable media URLs on detail reads; empty on list reads."
+          },
           "version": {
             "type": "string",
             "format": "int64",
