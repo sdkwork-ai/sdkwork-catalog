@@ -196,6 +196,14 @@
             }
           },
           {
+            "name": "brand_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "product_type",
             "in": "query",
             "required": false,
