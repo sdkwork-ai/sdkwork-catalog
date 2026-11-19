@@ -970,6 +970,13 @@
             "x-sdkwork-rust-type": "i64",
             "description": "Minor-unit exponent for salePriceMinor."
           },
+          "imageUrl": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Renderable URL of the product's main image, when the media snapshot carries one."
+          },
           "skus": {
             "type": "array",
             "items": {
