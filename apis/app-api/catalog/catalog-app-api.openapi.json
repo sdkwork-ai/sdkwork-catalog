@@ -941,6 +941,42 @@
             "format": "date-time",
             "description": "Last write time."
           },
+          "salePriceMinor": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "int64",
+            "pattern": "^-?[0-9]+$",
+            "x-sdkwork-int64-string": true,
+            "x-sdkwork-rust-type": "i64",
+            "description": "Minimum sellable SKU price in the minor unit. Null when the product has no active SKU."
+          },
+          "currencyCode": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Currency of the SKU that owns salePriceMinor."
+          },
+          "minorUnitExponent": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "int64",
+            "pattern": "^-?[0-9]+$",
+            "x-sdkwork-int64-string": true,
+            "x-sdkwork-rust-type": "i64",
+            "description": "Minor-unit exponent for salePriceMinor."
+          },
+          "skus": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CatalogSku"
+            },
+            "description": "Sellable SKUs on detail reads; empty on list reads."
+          },
           "version": {
             "type": "string",
             "format": "int64",
