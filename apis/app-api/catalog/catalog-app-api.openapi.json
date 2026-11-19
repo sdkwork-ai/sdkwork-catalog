@@ -977,6 +977,13 @@
             ],
             "description": "Renderable URL of the product's main image, when the media snapshot carries one."
           },
+          "brandName": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Brand display name, resolved from commerce_product_brand."
+          },
           "skus": {
             "type": "array",
             "items": {
